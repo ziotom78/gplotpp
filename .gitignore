@@ -1,7 +1,8 @@
 *~
 *.o
-simple
-histogram
-complex
-pngoutput
-pdfoutput
+example-complex
+example-histogram
+example-multipleseries
+example-pdfoutput
+example-pngoutput
+example-simple

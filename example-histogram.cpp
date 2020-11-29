@@ -31,6 +31,7 @@ int main(void) {
 
   gnuplot.set_xlabel("Value");
   gnuplot.set_ylabel("Number of counts");
+  gnuplot.set_xrange(1, 5);
   gnuplot.set_yrange(0, 5);
 
   gnuplot.show();

@@ -5,6 +5,7 @@ CXXFLAGS = -g -Wall --pedantic -O2
 all: \
 	example-complex \
 	example-histogram \
+	example-multipleseries \
 	example-pdfoutput \
 	example-pngoutput \
 	example-simple

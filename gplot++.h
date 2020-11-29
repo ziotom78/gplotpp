@@ -97,13 +97,14 @@ public:
     LOGXY,
   };
 
-  Gnuplot(const char *executable_name = "gnuplot")
+  Gnuplot(const char *executable_name = "gnuplot", bool persist = true)
       : connection{}, series{}, files_to_delete{} {
     std::stringstream os;
     // The --persist flag lets Gnuplot keep running after the C++
     // program has completed its execution
-    os << executable_name << " "
-       << "--persist";
+    os << executable_name;
+    if (persist)
+      os << " --persist";
     connection = popen(os.str().c_str(), "w");
 
     set_xrange();
@@ -218,14 +219,14 @@ public:
     std::ofstream of{filename};
     assert(of.good());
     for (const auto &val : y) {
-      of << y << "\n";
+      of << val << "\n";
     }
 
     series.push_back(GnuplotSeries{filename, style, label, "0:1"});
   }
 
-  template <typename T>
-  void plot(const std::vector<T> &x, const std::vector<T> &y,
+  template <typename T, typename U>
+  void plot(const std::vector<T> &x, const std::vector<U> &y,
             const std::string &label = "", LineStyle style = LineStyle::LINES) {
     assert(x.size() == y.size());
 

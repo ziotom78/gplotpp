@@ -1,6 +1,6 @@
 # gplot++
 
-![](https://github.com/ziotom78/gplotpp/workflows/make-checks/badge.svg)
+[![](https://github.com/ziotom78/gplotpp/workflows/make-checks/badge.svg)](https://github.com/ziotom78/gplotpp/actions?query=workflow%3Amake-checks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A header-only C++ interface to Gnuplot.

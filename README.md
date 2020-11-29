@@ -1,5 +1,8 @@
 # gplot++
 
+![](https://github.com/ziotom78/gplotpp/workflows/make-checks/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A header-only C++ interface to Gnuplot.
 
 This repository contains the file `gplot++.h`, which provides a way for C++ programs to connect to a Gnuplot instance to produce plots.

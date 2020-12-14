@@ -338,7 +338,9 @@ ones I referenced while developing my own's:
 
 ### v0.2.0
 
-- 3D plots (after a suggestion by William Luciani)
+-   New constants `GNUPLOTPP_VERSION`, `GNUPLOTPP_MAJOR_VERSION`,
+    `GNUPLOTPP_MINOR_VERSION`, and `GNUPLOTPP_PATCH_VERSION`
+-   3D plots (after a suggestion by William Luciani)
 
 ### v0.1.0
 

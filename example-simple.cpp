@@ -28,6 +28,9 @@ int main(void) {
   Gnuplot gnuplot{};
   std::vector<double> x{1, 2, 3, 4, 5}, y{5, 2, 4, 1, 3};
 
+  std::cout << "Running gplot++ v" << GNUPLOTPP_MAJOR_VERSION << "."
+            << GNUPLOTPP_MINOR_VERSION << "." << GNUPLOTPP_PATCH_VERSION
+            << "\n";
   gnuplot.plot(x, y);
   gnuplot.show();
 }

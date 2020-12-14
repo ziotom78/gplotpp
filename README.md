@@ -20,6 +20,7 @@ A few features of this library are the following:
 - Histograms (via `Gnuplot::histogram`)
 - Custom ranges (via `Gnuplot::set_xrange` and `Gnuplot::set_yrange`)
 - Possibility to save the plots in PNG and PDF files
+- 3D plots (**new in 0.2.0**)
 
 ## Examples
 
@@ -240,6 +241,35 @@ You must paint the several plot in order, and each time you complete
 one plot you must call `Gnuplot::show`.
 
 
+### 3D plots
+
+You can create 3D plots using the command `plot3d`, which takes
+*three* vectors. See the file `example-3d.cpp`:
+
+```c++
+#include "gplot++.h"
+#include <cmath>
+#include <iostream>
+
+int main(void) {
+  Gnuplot gnuplot{};
+  std::vector<double> x, y, z;
+
+  for (double angle = 0; angle < 6 * M_PI; angle += 0.1) {
+    x.push_back(cos(angle));
+    y.push_back(sin(angle));
+    z.push_back(angle / 2 * M_PI);
+  }
+
+  gnuplot.plot3d(x, y, z);
+  gnuplot.show();
+}
+```
+
+Here is the result:
+
+![](./images/3d.png)
+
 ### Saving plots to a file
 
 It is often useful to save the plot into a file, instead of opening a
@@ -303,3 +333,13 @@ ones I referenced while developing my own's:
 -   [gnuplot-cpp](https://github.com/martinruenz/gnuplot-cpp): another
     header-only library. It lacks support for high-level stuff like
     `std::vector` plotting.
+
+## Changelog
+
+### v0.2.0
+
+- 3D plots (after a suggestion by William Luciani)
+
+### v0.1.0
+
+- First release

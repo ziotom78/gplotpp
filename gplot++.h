@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.2.0 (2020/12/14): 3D plots
+ *
  * - 0.1.0 (2020/11/29): first release
  *
  */
@@ -98,7 +100,7 @@ public:
   };
 
   Gnuplot(const char *executable_name = "gnuplot", bool persist = true)
-      : connection{}, series{}, files_to_delete{} {
+      : connection{}, series{}, files_to_delete{}, is_3dplot{false} {
     std::stringstream os;
     // The --persist flag lets Gnuplot keep running after the C++
     // program has completed its execution
@@ -109,6 +111,7 @@ public:
 
     set_xrange();
     set_yrange();
+    set_zrange();
 
     // See
     // https://stackoverflow.com/questions/28152719/how-to-make-gnuplot-use-the-unicode-minus-sign-for-negative-numbers
@@ -196,6 +199,11 @@ public:
     yrange = format_range(min, max);
   }
 
+  /* Set the minimum and maximum value to be displayed along the X axis */
+  void set_zrange(double min = NAN, double max = NAN) {
+    zrange = format_range(min, max);
+  }
+
   bool set_logscale(AxisScale scale) {
     switch (scale) {
     case AxisScale::LOGX:
@@ -215,6 +223,10 @@ public:
     if (y.empty())
       return;
 
+    if (!series.empty()) {
+      assert(!is_3dplot);
+    }
+
     std::string filename{tmp_file_name()};
     std::ofstream of{filename};
     assert(of.good());
@@ -223,6 +235,7 @@ public:
     }
 
     series.push_back(GnuplotSeries{filename, style, label, "0:1"});
+    is_3dplot = false;
   }
 
   template <typename T, typename U>
@@ -233,6 +246,10 @@ public:
     if (x.empty())
       return;
 
+    if (!series.empty()) {
+      assert(!is_3dplot);
+    }
+
     std::string filename{tmp_file_name()};
     std::ofstream of{filename};
     assert(of.good());
@@ -241,6 +258,32 @@ public:
     }
 
     series.push_back(GnuplotSeries{filename, style, label, "1:2"});
+    is_3dplot = false;
+  }
+
+  template <typename T, typename U>
+  void plot3d(const std::vector<T> &x, const std::vector<U> &y,
+              const std::vector<U> &z, const std::string &label = "",
+              LineStyle style = LineStyle::LINES) {
+    assert(x.size() == y.size());
+    assert(x.size() == z.size());
+
+    if (x.empty())
+      return;
+
+    if (!series.empty()) {
+      assert(is_3dplot);
+    }
+
+    std::string filename{tmp_file_name()};
+    std::ofstream of{filename};
+    assert(of.good());
+    for (size_t i{}; i < x.size(); ++i) {
+      of << x[i] << " " << y[i] << " " << z[i] << "\n";
+    }
+
+    series.push_back(GnuplotSeries{filename, style, label, "1:2:3"});
+    is_3dplot = true;
   }
 
   template <typename T>
@@ -251,6 +294,10 @@ public:
 
     if (values.empty())
       return;
+
+    if (!series.empty()) {
+      assert(!is_3dplot);
+    }
 
     double min = *std::min_element(values.begin(), values.end());
     double max = *std::max_element(values.begin(), values.end());
@@ -273,6 +320,7 @@ public:
     }
 
     series.push_back(GnuplotSeries{filename, style, label, "1:2"});
+    is_3dplot = false;
   }
 
   bool multiplot(int nrows, int ncols, const std::string &title = "") {
@@ -286,7 +334,11 @@ public:
     std::stringstream os;
     os << "set style fill solid 0.5\n";
 
-    os << "plot " << xrange << " " << yrange << " ";
+    if (is_3dplot) {
+      os << "splot " << xrange << " " << yrange << " " << zrange << " ";
+    } else {
+      os << "plot " << xrange << " " << yrange << " ";
+    }
     for (size_t i{}; i < series.size(); ++i) {
       const GnuplotSeries &s = series.at(i);
       os << "'" << s.filename << "' using " << s.column_range << " with "
@@ -308,6 +360,7 @@ public:
     series.clear();
     set_xrange();
     set_yrange();
+    is_3dplot = false;
   }
 
 private:
@@ -350,4 +403,6 @@ private:
   std::vector<std::string> files_to_delete;
   std::string xrange;
   std::string yrange;
+  std::string zrange;
+  bool is_3dplot;
 };

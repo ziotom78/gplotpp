@@ -22,6 +22,14 @@ A few features of this library are the following:
 - Possibility to save the plots in PNG and PDF files
 - 3D plots (**new in 0.2.0**)
 
+## Installing the library
+
+Just download the file
+[gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h)
+and save it in the same folder as your program. That's all. (Of
+course, you must have Gnuplot installed and available in the
+`PATH`.)
+
 ## Examples
 
 Here is the output of one of the examples:

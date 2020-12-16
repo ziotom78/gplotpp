@@ -344,6 +344,11 @@ ones I referenced while developing my own's:
 
 ## Changelog
 
+### v0.2.1
+
+-   Ensure that commands sent to Gnuplot are executed immediately
+    ([#1](https://github.com/ziotom78/gplotpp/pull/1))
+
 ### v0.2.0
 
 -   New constants `GNUPLOTPP_VERSION`, `GNUPLOTPP_MAJOR_VERSION`,

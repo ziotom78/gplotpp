@@ -22,6 +22,7 @@
  */
 
 #include "gplot++.h"
+#include <cstdio>
 #include <iostream>
 
 int main(void) {
@@ -33,4 +34,7 @@ int main(void) {
             << "\n";
   gnuplot.plot(x, y);
   gnuplot.show();
+
+  std::cout << "Press any key to quit...";
+  std::getchar();
 }

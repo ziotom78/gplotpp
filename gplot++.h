@@ -150,6 +150,8 @@ public:
 
     fputs(str, connection);
     fputc('\n', connection);
+    fflush(connection);
+
     return true;
   }
 

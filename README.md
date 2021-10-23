@@ -82,7 +82,7 @@ The preferred way to install Gnuplot is using [Homebrew](https://formulae.brew.s
 
 ### Installing `gplot++.h`
 
-Once you have Gnuplot installed, download the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h) and save it in the same folder as your program. That's all.
+Once you have Gnuplot installed, download the file <a href="https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h" target="_blank">gplot++.h</a> and save it in the same folder as your program. That's all.
 
 
 ## Examples

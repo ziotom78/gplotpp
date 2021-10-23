@@ -38,7 +38,6 @@
 #include <cassert>
 #include <cmath>
 #include <cstdio>
-#include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -85,16 +84,6 @@ private:
 #else
     sleep(seconds);
 #endif
-  }
-
-  // Create a name for a temporary file and return it
-  std::string tmp_file_name() {
-    // Calling "tmpnam" makes GCC emit a warning, but there is no
-    // portable way to create a temporary file name in C++
-    std::string filename{std::tmpnam(nullptr)};
-    files_to_delete.push_back(filename);
-
-    return filename;
   }
 
   std::string escape_quotes(const std::string &s) {
@@ -257,14 +246,12 @@ public:
       assert(!is_3dplot);
     }
 
-    std::string filename{tmp_file_name()};
-    std::ofstream of{filename};
-    assert(of.good());
+    std::stringstream of;
     for (const auto &val : y) {
       of << val << "\n";
     }
 
-    series.push_back(GnuplotSeries{filename, style, label, "0:1"});
+    series.push_back(GnuplotSeries{of.str(), style, label, "0:1"});
     is_3dplot = false;
   }
 
@@ -280,14 +267,12 @@ public:
       assert(!is_3dplot);
     }
 
-    std::string filename{tmp_file_name()};
-    std::ofstream of{filename};
-    assert(of.good());
+    std::stringstream of;
     for (size_t i{}; i < x.size(); ++i) {
       of << x[i] << " " << y[i] << "\n";
     }
 
-    series.push_back(GnuplotSeries{filename, style, label, "1:2"});
+    series.push_back(GnuplotSeries{of.str(), style, label, "1:2"});
     is_3dplot = false;
   }
 
@@ -305,14 +290,12 @@ public:
       assert(is_3dplot);
     }
 
-    std::string filename{tmp_file_name()};
-    std::ofstream of{filename};
-    assert(of.good());
+    std::stringstream of;
     for (size_t i{}; i < x.size(); ++i) {
       of << x[i] << " " << y[i] << " " << z[i] << "\n";
     }
 
-    series.push_back(GnuplotSeries{filename, style, label, "1:2:3"});
+    series.push_back(GnuplotSeries{of.str(), style, label, "1:2:3"});
     is_3dplot = true;
   }
 
@@ -342,14 +325,12 @@ public:
       bins.at(index)++;
     }
 
-    std::string filename{tmp_file_name()};
-    std::ofstream of{filename};
-    assert(of.good());
+    std::stringstream of;
     for (size_t i{}; i < nbins; ++i) {
       of << min + binwidth * (i + 0.5) << " " << bins[i] << "\n";
     }
 
-    series.push_back(GnuplotSeries{filename, style, label, "1:2"});
+    series.push_back(GnuplotSeries{of.str(), style, label, "1:2"});
     is_3dplot = false;
   }
 
@@ -364,14 +345,23 @@ public:
     std::stringstream os;
     os << "set style fill solid 0.5\n";
 
+    // Write the data in separate series
+    for (size_t i{}; i < series.size(); ++i) {
+      const GnuplotSeries &s = series.at(i);
+      os << "$Datablock" << i << " << EOD\n"
+         << series.at(i).data_string << "\nEOD\n";
+    }
+
     if (is_3dplot) {
       os << "splot " << xrange << " " << yrange << " " << zrange << " ";
     } else {
       os << "plot " << xrange << " " << yrange << " ";
     }
+
+    // Plot the series we have just defined
     for (size_t i{}; i < series.size(); ++i) {
       const GnuplotSeries &s = series.at(i);
-      os << "'" << s.filename << "' using " << s.column_range << " with "
+      os << "$Datablock" << i << " using " << s.column_range << " with "
          << style_to_str(s.line_style) << " title '" << escape_quotes(s.title)
          << "'";
 
@@ -395,7 +385,7 @@ public:
 
 private:
   struct GnuplotSeries {
-    std::string filename;
+    std::string data_string;
     LineStyle line_style;
     std::string title;
     std::string column_range;

@@ -42,6 +42,7 @@ Table of Contents
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
+      * [v0.3.0](#v030)
       * [v0.2.1](#v021)
       * [v0.2.0](#v020)
       * [v0.1.0](#v010)
@@ -398,6 +399,10 @@ ones I referenced while developing my own's:
     `std::vector` plotting.
 
 ## Changelog
+
+### v0.3.0
+
+-   The library is now supported under Windows
 
 ### v0.2.1
 

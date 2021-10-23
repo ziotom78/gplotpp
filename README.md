@@ -23,6 +23,7 @@ Table of Contents
 =================
 
 * [gplot++](#gplot)
+* [Table of Contents](#table-of-contents)
    * [Installing the library](#installing-the-library)
       * [Windows](#windows)
       * [Linux](#linux)
@@ -37,6 +38,7 @@ Table of Contents
       * [Styling the plot axes](#styling-the-plot-axes)
       * [Logarithmic scale](#logarithmic-scale)
       * [Multiple plots](#multiple-plots)
+      * [Error bars](#error-bars)
       * [3D plots](#3d-plots)
       * [Saving plots to a file](#saving-plots-to-a-file)
       * [Low-level interface](#low-level-interface)

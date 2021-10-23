@@ -5,10 +5,7 @@
 
 A header-only C++ interface to Gnuplot.
 
-This repository contains the file `gplot++.h`, which provides a way
-for C++ programs to connect to a Gnuplot instance to produce plots. To
-use this library, you must first install
-[Gnuplot](http://www.gnuplot.info/) on your system!
+This repository contains the file `gplot++.h`, which provides a way for C++ programs to connect to a Gnuplot instance to produce plots. To use this library, you must first install [Gnuplot](http://www.gnuplot.info/) on your system!
 
 A few features of this library are the following:
 
@@ -22,13 +19,71 @@ A few features of this library are the following:
 - Possibility to save the plots in PNG and PDF files
 - 3D plots (**new in 0.2.0**)
 
+Table of Contents
+=================
+
+* [gplot++](#gplot)
+   * [Installing the library](#installing-the-library)
+      * [Windows](#windows)
+      * [Linux](#linux)
+      * [Mac OS X](#mac-os-x)
+      * [Installing gplot++.h](#installing-gploth)
+   * [Examples](#examples)
+   * [Documentation](#documentation)
+      * [Initializing a connection to Gnuplot](#initializing-a-connection-to-gnuplot)
+      * [Plot commands](#plot-commands)
+      * [Histograms](#histograms)
+      * [Line styles](#line-styles)
+      * [Styling the plot axes](#styling-the-plot-axes)
+      * [Logarithmic scale](#logarithmic-scale)
+      * [Multiple plots](#multiple-plots)
+      * [3D plots](#3d-plots)
+      * [Saving plots to a file](#saving-plots-to-a-file)
+      * [Low-level interface](#low-level-interface)
+   * [Similar libraries](#similar-libraries)
+   * [Changelog](#changelog)
+      * [v0.2.1](#v021)
+      * [v0.2.0](#v020)
+      * [v0.1.0](#v010)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
+
 ## Installing the library
 
-Just download the file
-[gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h)
-and save it in the same folder as your program. That's all. (Of
-course, you must have Gnuplot installed and available in the
-`PATH`.)
+Of course, before using `gplot++.h` you must have Gnuplot installed and available in the `PATH`! We provide here instructions about how to install Gnuplot under Windows, Mac OS X, and Linux. 
+
+**Windows users, beware that the standard installation won't work with `gplot++.h` because you need to activate a flag during the installation!**
+
+### Windows
+
+Download the Gnuplot installer from the [SourceForge website](https://sourceforge.net/projects/gnuplot/files/gnuplot/). Be sure not to download the `.tar.gz` file; instead, you should download the file ending with `.exe`, e.g., [gp542-win64-mingw.exe](https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.2/gp542-win64-mingw.exe/download).
+
+When you run the installer, pay attention to the option *Add application directory to your PATH environment variable* while installing Gnuplot, otherwise **`gplot++.h` will fail to generate the plots**!
+
+### Linux
+
+Linux users should use their package manager to install Gnuplot:
+
+    # Debian, Ubuntu, Linux Mint
+    sudo apt-get install gnuplot
+    
+    # Arch, Manjaro
+    sudo pacman -Syu gnuplot
+    
+    # Fedora
+    sudo dns install gnuplot
+
+### Mac OS X
+
+The preferred way to install Gnuplot is using [Homebrew](https://formulae.brew.sh/formula/gnuplot) from the terminal:
+
+    brew install gnuplot
+
+### Installing `gplot++.h`
+
+Once you have Gnuplot installed, download the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h) and save it in the same folder as your program. That's all.
+
 
 ## Examples
 
@@ -161,7 +216,7 @@ histogram of a series and plot it using Gnuplot. Here is an example
 
 int main(void) {
   Gnuplot gnuplot{};
-  std::vector<double> x{1, 2, 3, 4, 5}, y{5, 2, 4, 1, 3};
+  std::vector<double> y{5, 2, 4, 1, 3};
 
   gnuplot.histogram(y, 2, "Histogram");
 

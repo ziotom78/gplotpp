@@ -323,7 +323,7 @@ public:
 
     std::vector<size_t> bins(nbins);
     for (const auto &val : values) {
-      int index = (val - min) / binwidth;
+      int index = static_cast<int>((val - min) / binwidth);
       if (index >= int(nbins))
         --index;
 

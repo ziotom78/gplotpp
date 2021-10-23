@@ -12,6 +12,10 @@ add_executable(example-complex
   example-complex.cpp
   )
 
+add_executable(example-errorbars
+  example-errorbars.cpp
+  )
+
 add_executable(example-histogram
   example-histogram.cpp
   )

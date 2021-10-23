@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.3.1 (2021/10/23): error bars
+ *
  * - 0.3.0 (2021/10/23): support for Windows
  *
  * - 0.2.1 (2020/12/16): ensure that commands sent to Gnuplot are executed
@@ -112,6 +114,9 @@ public:
     LINESPOINTS,
     STEPS,
     BOXES,
+    X_ERROR_BARS,
+    Y_ERROR_BARS,
+    XY_ERROR_BARS,
   };
 
   enum class AxisScale {
@@ -281,6 +286,43 @@ public:
     is_3dplot = false;
   }
 
+  template <typename T, typename U, typename V>
+  void plot_xerr(const std::vector<T> &x, const std::vector<U> &y,
+                 const std::vector<V> &err, const std::string &label = "") {
+    _plot_error(x, y, err, LineStyle::X_ERROR_BARS, label);
+  }
+
+  template <typename T, typename U, typename V>
+  void plot_yerr(const std::vector<T> &x, const std::vector<U> &y,
+                 const std::vector<V> &err, const std::string &label = "") {
+    _plot_error(x, y, err, LineStyle::Y_ERROR_BARS, label);
+  }
+
+  template <typename T, typename U, typename V, typename W>
+  void plot_xyerr(const std::vector<T> &x, const std::vector<U> &y,
+                  const std::vector<V> &xerr, const std::vector<W> &yerr,
+                  const std::string &label = "") {
+    assert(x.size() == y.size());
+    assert(x.size() == xerr.size());
+    assert(y.size() == yerr.size());
+
+    if (x.empty())
+      return;
+
+    if (!series.empty()) {
+      assert(!is_3dplot);
+    }
+
+    std::stringstream of;
+    for (size_t i{}; i < x.size(); ++i) {
+      of << x[i] << " " << y[i] << " " << xerr[i] << " " << yerr[i] << "\n";
+    }
+
+    series.push_back(
+        GnuplotSeries{of.str(), LineStyle::XY_ERROR_BARS, label, "1:2:3:4"});
+    is_3dplot = false;
+  }
+
   template <typename T, typename U>
   void plot3d(const std::vector<T> &x, const std::vector<U> &y,
               const std::vector<U> &z, const std::string &label = "",
@@ -347,6 +389,9 @@ public:
   }
 
   bool show(bool call_reset = true) {
+    if (series.empty())
+      return true;
+
     std::stringstream os;
     os << "set style fill solid 0.5\n";
 
@@ -389,6 +434,29 @@ public:
   }
 
 private:
+  template <typename T, typename U, typename V>
+  void _plot_error(const std::vector<T> &x, const std::vector<U> &y,
+                   const std::vector<V> &err, LineStyle style,
+                   const std::string &label = "") {
+    assert(x.size() == y.size());
+    assert(x.size() == err.size());
+
+    if (x.empty())
+      return;
+
+    if (!series.empty()) {
+      assert(!is_3dplot);
+    }
+
+    std::stringstream of;
+    for (size_t i{}; i < x.size(); ++i) {
+      of << x[i] << " " << y[i] << " " << err[i] << "\n";
+    }
+
+    series.push_back(GnuplotSeries{of.str(), style, label, "1:2:3"});
+    is_3dplot = false;
+  }
+
   struct GnuplotSeries {
     std::string data_string;
     LineStyle line_style;
@@ -408,6 +476,12 @@ private:
       return "steps";
     case LineStyle::BOXES:
       return "boxes";
+    case LineStyle::X_ERROR_BARS:
+      return "xerrorbars";
+    case LineStyle::Y_ERROR_BARS:
+      return "yerrorbars";
+    case LineStyle::XY_ERROR_BARS:
+      return "xyerrorbars";
     default:
       return "lines";
     }

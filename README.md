@@ -42,6 +42,7 @@ Table of Contents
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
+      * [v0.3.1](#v031)
       * [v0.3.0](#v030)
       * [v0.2.1](#v021)
       * [v0.2.0](#v020)
@@ -305,6 +306,69 @@ You must paint the several plot in order, and each time you complete
 one plot you must call `Gnuplot::show`.
 
 
+### Error bars
+
+Starting from version 0.3.1, `gplot++.h` supports plots with error bars through these functions:
+
+```c++
+Gnuplot::plot_xerr(x, y, xerr, label = "");
+Gnuplot::plot_yerr(x, y, yerr, label = "");
+Gnuplot::plot_xyerr(x, y, xerr, yerr, label = "");
+```
+
+Here is an example ([example-errorbars.cpp](./example-errorbars.cpp)):
+
+```c++
+#include "gplot++.h"
+
+int main(void) {
+  Gnuplot plt{};
+  std::vector<double> x{1, 2, 3, 4, 5}, y{5, 2, 4, 1, 3};
+  std::vector<double> xerr{0.2, 0.2, 0.1, 0.1, 0.2},
+      yerr{0.3, 0.4, 0.2, 0.6, 0.7};
+
+  /* Create four plots with the following layout (2 rows, 2 columns):
+   *
+   * +------------------------+------------------------+
+   * |                        |                        |
+   * |        Plot #1         |        Plot #2         |
+   * |                        |                        |
+   * +------------------------+------------------------+
+   * |                        |                        |
+   * |        Plot #3         |        Plot #4         |
+   * |                        |                        |
+   * +------------------------+------------------------+
+   */
+  plt.multiplot(2, 2, "Title");
+
+  // Plot #1
+  plt.set_xlabel("X axis");
+  plt.set_ylabel("Y axis");
+  plt.plot(x, y, "", Gnuplot::LineStyle::POINTS);
+  plt.show(); // Always call "show"!
+
+  // Plot #2: X error bar
+  plt.set_xlabel("X axis");
+  plt.set_ylabel("Y axis");
+  plt.plot_xerr(x, y, xerr);
+  plt.show(); // Always call "show"!
+
+  // Plot #3: Y error bar
+  plt.set_xlabel("X axis");
+  plt.set_ylabel("Y axis");
+  plt.plot_yerr(x, y, yerr);
+  plt.show(); // Always call "show"!
+
+  // Plot #4: X and Y error bars
+  plt.set_xlabel("X axis");
+  plt.set_ylabel("Y axis");
+  plt.plot_xyerr(x, y, xerr, yerr);
+  plt.show(); // Always call "show"!
+}
+```
+
+![](./images/errorbars.png)
+
 ### 3D plots
 
 You can create 3D plots using the command `plot3d`, which takes
@@ -399,6 +463,10 @@ ones I referenced while developing my own's:
     `std::vector` plotting.
 
 ## Changelog
+
+### v0.3.1
+
+-   `Gnuplot::plot_xerr`, `Gnuplot::plot_yerr`, and `Gnuplot::plot_xyerr` have been added
 
 ### v0.3.0
 

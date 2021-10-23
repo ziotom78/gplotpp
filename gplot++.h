@@ -43,7 +43,6 @@
 #include <string>
 #include <vector>
 
-// The "sleep" function is non-standard
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -64,6 +63,30 @@ const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);
  */
 class Gnuplot {
 private:
+  static FILE *safe_popen(const char *name, const char *mode) {
+#ifdef _WIN32
+    return _popen(name, mode);
+#else
+    return popen(name, mode);
+#endif
+  }
+
+  static int safe_pclose(FILE *f) {
+#ifdef _WIN32
+    return _pclose(f);
+#else
+    return pclose(f);
+#endif
+  }
+
+  static void safe_sleep(unsigned seconds) {
+#ifdef _WIN32
+    Sleep(seconds * 1000); // Sleep on Windows requires milliseconds
+#else
+    sleep(seconds);
+#endif
+  }
+
   // Create a name for a temporary file and return it
   std::string tmp_file_name() {
     // Calling "tmpnam" makes GCC emit a warning, but there is no
@@ -112,7 +135,7 @@ public:
     os << executable_name;
     if (persist)
       os << " --persist";
-    connection = popen(os.str().c_str(), "w");
+    connection = safe_popen(os.str().c_str(), "w");
 
     set_xrange();
     set_yrange();
@@ -127,13 +150,13 @@ public:
   ~Gnuplot() {
     // Bye bye, Gnuplot!
     if (connection) {
-      pclose(connection);
+      safe_pclose(connection);
       connection = nullptr;
     }
 
     // Let some time pass before removing the files, so that Gnuplot
     // can finish displaying the last plot.
-    sleep(1);
+    safe_sleep(1);
 
     // Now remove the data files
     for (const auto &fname : files_to_delete) {

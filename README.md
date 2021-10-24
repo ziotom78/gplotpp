@@ -5,7 +5,7 @@
 
 A header-only C++ interface to Gnuplot.
 
-This repository contains the file `gplot++.h`, which provides a way for C++ programs to connect to a Gnuplot instance to produce plots. To use this library, you must first install [Gnuplot](http://www.gnuplot.info/) on your system!
+This repository contains the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h), which provides a way for C++ programs to connect to a Gnuplot instance to produce plots. To use this library, you must first install [Gnuplot](http://www.gnuplot.info/) on your system!
 
 A few features of this library are the following:
 
@@ -19,12 +19,12 @@ A few features of this library are the following:
 - Possibility to save the plots in PNG and PDF files
 - 3D plots (**new in 0.2.0**)
 
-Table of Contents
-=================
+
+# Table of Contents
 
 * [gplot++](#gplot)
 * [Table of Contents](#table-of-contents)
-   * [Installing the library](#installing-the-library)
+   * [Installing Gnuplot and gplot++.h](#installing-gnuplot-and-gploth)
       * [Windows](#windows)
       * [Linux](#linux)
       * [Mac OS X](#mac-os-x)
@@ -53,7 +53,7 @@ Table of Contents
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 
-## Installing the library
+## Installing Gnuplot and `gplot++.h`
 
 Of course, before using `gplot++.h` you must have Gnuplot installed and available in the `PATH`! We provide here instructions about how to install Gnuplot under Windows, Mac OS X, and Linux. 
 
@@ -63,7 +63,7 @@ Of course, before using `gplot++.h` you must have Gnuplot installed and availabl
 
 Download the Gnuplot installer from the [SourceForge website](https://sourceforge.net/projects/gnuplot/files/gnuplot/). Be sure not to download the `.tar.gz` file; instead, you should download the file ending with `.exe`, e.g., [gp542-win64-mingw.exe](https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.2/gp542-win64-mingw.exe/download).
 
-When you run the installer, pay attention to the option *Add application directory to your PATH environment variable* while installing Gnuplot, otherwise **`gplot++.h` will fail to generate the plots**!
+When you run the installer, pay attention to the option *Add application directory to your PATH environment variable* while installing Gnuplot, otherwise **`gplot++.h` will fail to generate the plots**! See [this video](https://vimeo.com/638098416) for help.
 
 ### Linux
 
@@ -88,6 +88,7 @@ The preferred way to install Gnuplot is using [Homebrew](https://formulae.brew.s
 
 Once you have Gnuplot installed, download the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h) and save it in the same folder as your program. That's all.
 
+[This video](https://vimeo.com/638098854) shows how to include [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h) in a C++ project created using Visual Studio 2019 (Windows).
 
 ## Examples
 

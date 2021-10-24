@@ -398,8 +398,7 @@ public:
     // Write the data in separate series
     for (size_t i{}; i < series.size(); ++i) {
       const GnuplotSeries &s = series.at(i);
-      os << "$Datablock" << i << " << EOD\n"
-         << series.at(i).data_string << "\nEOD\n";
+      os << "$Datablock" << i << " << EOD\n" << s.data_string << "\nEOD\n";
     }
 
     if (is_3dplot) {

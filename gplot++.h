@@ -45,6 +45,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstdio>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -117,6 +118,7 @@ public:
     X_ERROR_BARS,
     Y_ERROR_BARS,
     XY_ERROR_BARS,
+    VECTORS,
   };
 
   enum class AxisScale {
@@ -249,101 +251,54 @@ public:
   template <typename T>
   void plot(const std::vector<T> &y, const std::string &label = "",
             LineStyle style = LineStyle::LINES) {
-    if (y.empty())
-      return;
-
-    if (!series.empty()) {
-      assert(!is_3dplot);
-    }
-
-    std::stringstream of;
-    for (const auto &val : y) {
-      of << val << "\n";
-    }
-
-    series.push_back(GnuplotSeries{of.str(), style, label, "0:1"});
-    is_3dplot = false;
+    _plot(label, style, false, y);
   }
 
   template <typename T, typename U>
   void plot(const std::vector<T> &x, const std::vector<U> &y,
             const std::string &label = "", LineStyle style = LineStyle::LINES) {
-    assert(x.size() == y.size());
-
-    if (x.empty())
-      return;
-
-    if (!series.empty()) {
-      assert(!is_3dplot);
-    }
-
-    std::stringstream of;
-    for (size_t i{}; i < x.size(); ++i) {
-      of << x[i] << " " << y[i] << "\n";
-    }
-
-    series.push_back(GnuplotSeries{of.str(), style, label, "1:2"});
-    is_3dplot = false;
+    _plot(label, style, false, x, y);
   }
 
   template <typename T, typename U, typename V>
   void plot_xerr(const std::vector<T> &x, const std::vector<U> &y,
                  const std::vector<V> &err, const std::string &label = "") {
-    _plot_error(x, y, err, LineStyle::X_ERROR_BARS, label);
+    _plot(label, LineStyle::X_ERROR_BARS, false, x, y, err);
   }
 
   template <typename T, typename U, typename V>
   void plot_yerr(const std::vector<T> &x, const std::vector<U> &y,
                  const std::vector<V> &err, const std::string &label = "") {
-    _plot_error(x, y, err, LineStyle::Y_ERROR_BARS, label);
+    _plot(label, LineStyle::Y_ERROR_BARS, false, x, y, err);
   }
 
   template <typename T, typename U, typename V, typename W>
   void plot_xyerr(const std::vector<T> &x, const std::vector<U> &y,
                   const std::vector<V> &xerr, const std::vector<W> &yerr,
                   const std::string &label = "") {
-    assert(x.size() == y.size());
-    assert(x.size() == xerr.size());
-    assert(y.size() == yerr.size());
+    _plot(label, LineStyle::XY_ERROR_BARS, false, x, y, xerr, yerr);
+  }
 
-    if (x.empty())
-      return;
-
-    if (!series.empty()) {
-      assert(!is_3dplot);
-    }
-
-    std::stringstream of;
-    for (size_t i{}; i < x.size(); ++i) {
-      of << x[i] << " " << y[i] << " " << xerr[i] << " " << yerr[i] << "\n";
-    }
-
-    series.push_back(
-        GnuplotSeries{of.str(), LineStyle::XY_ERROR_BARS, label, "1:2:3:4"});
-    is_3dplot = false;
+  template <typename T, typename U, typename V, typename W>
+  void plot_vectors(const std::vector<T> &x, const std::vector<U> &y,
+                    const std::vector<V> &vx, const std::vector<W> &vy,
+                    const std::string &label = "") {
+    _plot(label, LineStyle::VECTORS, false, x, y, vx, vy);
   }
 
   template <typename T, typename U>
   void plot3d(const std::vector<T> &x, const std::vector<U> &y,
               const std::vector<U> &z, const std::string &label = "",
               LineStyle style = LineStyle::LINES) {
-    assert(x.size() == y.size());
-    assert(x.size() == z.size());
+    _plot(label, style, true, x, y, z);
+  }
 
-    if (x.empty())
-      return;
-
-    if (!series.empty()) {
-      assert(is_3dplot);
-    }
-
-    std::stringstream of;
-    for (size_t i{}; i < x.size(); ++i) {
-      of << x[i] << " " << y[i] << " " << z[i] << "\n";
-    }
-
-    series.push_back(GnuplotSeries{of.str(), style, label, "1:2:3"});
-    is_3dplot = true;
+  template <typename T, typename U, typename V, typename W>
+  void plot_vectors3d(const std::vector<T> &x, const std::vector<U> &y,
+                      const std::vector<T> &z, const std::vector<V> &vx,
+                      const std::vector<W> &vy, const std::vector<T> &vz,
+                      const std::string &label = "") {
+    _plot(label, LineStyle::VECTORS, true, x, y, z, vx, vy, vz);
   }
 
   template <typename T>
@@ -433,27 +388,43 @@ public:
   }
 
 private:
-  template <typename T, typename U, typename V>
-  void _plot_error(const std::vector<T> &x, const std::vector<U> &y,
-                   const std::vector<V> &err, LineStyle style,
-                   const std::string &label = "") {
-    assert(x.size() == y.size());
-    assert(x.size() == err.size());
+  void _print_ith_elements(std::ostream &, std::ostream &, int, size_t) {}
 
-    if (x.empty())
+  template <typename T, typename... Args>
+  void _print_ith_elements(std::ostream &os, std::ostream &fmts, int index,
+                           size_t i, const std::vector<T> &v, Args... args) {
+    os << v[i] << " ";
+
+    if (i == 0) {
+      if (index > 1)
+        fmts << ':';
+      fmts << index;
+    }
+
+    _print_ith_elements(os, fmts, index + 1, i, args...);
+  }
+
+  template <typename T, typename... Args>
+  void _plot(const std::string &label, LineStyle style, bool is_this_3dplot,
+             const std::vector<T> &v, Args... args) {
+    if (v.empty())
       return;
 
     if (!series.empty()) {
-      assert(!is_3dplot);
+      // Check that we are not adding a 3D plot to a 2D plot, or vice versa
+      assert(is_3dplot == is_this_3dplot);
     }
 
     std::stringstream of;
-    for (size_t i{}; i < x.size(); ++i) {
-      of << x[i] << " " << y[i] << " " << err[i] << "\n";
+    std::stringstream fmtstring;
+    for (size_t i{}; i < v.size(); ++i) {
+      _print_ith_elements(of, fmtstring, 1, i, v, args...);
+      of << "\n";
     }
 
-    series.push_back(GnuplotSeries{of.str(), style, label, "1:2:3"});
-    is_3dplot = false;
+    std::cerr << "fmtstring = " << fmtstring.str() << "\n";
+    series.push_back(GnuplotSeries{of.str(), style, label, fmtstring.str()});
+    is_3dplot = is_this_3dplot;
   }
 
   struct GnuplotSeries {
@@ -481,6 +452,8 @@ private:
       return "yerrorbars";
     case LineStyle::XY_ERROR_BARS:
       return "xyerrorbars";
+    case LineStyle::VECTORS:
+      return "vectors";
     default:
       return "lines";
     }

@@ -484,6 +484,10 @@ use several measure units to specify the size of the image. In this
 case too, you can avoid passing the second parameter, and a reasonable
 default will be used.
 
+Finally, you can save the plot in a SVG file via the method
+`Gnuplot::redirect_to_svg`. In this case, the SVG file will be
+interactive when opened in a web browser.
+
 
 ### Low-level interface
 

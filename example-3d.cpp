@@ -25,14 +25,16 @@
 #include <cmath>
 #include <iostream>
 
+const double pi{3.1415926535897932384626433};
+
 int main(void) {
   Gnuplot gnuplot{};
   std::vector<double> x, y, z;
 
-  for (double angle = 0; angle < 6 * M_PI; angle += 0.1) {
+  for (double angle = 0; angle < 6 * pi; angle += 0.1) {
     x.push_back(cos(angle));
     y.push_back(sin(angle));
-    z.push_back(angle / 2 * M_PI);
+    z.push_back(angle / 2 * pi);
   }
 
   gnuplot.plot3d(x, y, z);

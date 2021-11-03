@@ -23,20 +23,32 @@
 
 #include "gplot++.h"
 #include <cmath>
-#include <iostream>
+#include <vector>
 
-const double pi{3.1415926535897932384626433};
+using namespace std;
 
 int main(void) {
   Gnuplot gnuplot{};
-  std::vector<double> x, y, z;
 
-  for (double angle = 0; angle < 6 * pi; angle += 0.1) {
-    x.push_back(cos(angle));
-    y.push_back(sin(angle));
-    z.push_back(angle / 2 * pi);
+  vector<double> x{}, y{};
+  vector<double> vx{}, vy{};
+
+  // Sample a regular grid. Use a small tilt to avoid sampling
+  // the grid at the origin
+  for (double cur_x{-10.1}; cur_x <= 10; cur_x += 1) {
+    for (double cur_y{-10.1}; cur_y <= 10; cur_y += 1) {
+      x.push_back(cur_x);
+      y.push_back(cur_y);
+
+      double r{sqrt(pow(cur_x, 2) + pow(cur_y, 2))};
+      double cur_vx{-cur_x / r};
+      double cur_vy{-cur_y / r};
+      vx.push_back(cur_vx);
+      vy.push_back(cur_vy);
+    }
   }
 
-  gnuplot.plot3d(x, y, z);
+  gnuplot.redirect_to_png("example-vec.png");
+  gnuplot.plot_vectors(x, y, vx, vy);
   gnuplot.show();
 }

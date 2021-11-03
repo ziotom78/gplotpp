@@ -40,10 +40,12 @@ A few features of this library are the following:
       * [Multiple plots](#multiple-plots)
       * [Error bars](#error-bars)
       * [3D plots](#3d-plots)
+      * [Vector fields](#vector-fields)
       * [Saving plots to a file](#saving-plots-to-a-file)
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
+      * [HEAD](#head)
       * [v0.3.1](#v031)
       * [v0.3.0](#v030)
       * [v0.2.1](#v021)
@@ -401,6 +403,47 @@ Here is the result:
 
 ![](./images/3d.png)
 
+
+### Vector fields
+
+Starting from version 0.4.0, gplot++ supports vector field plots, both in 2D and 3D, through the methods `Gnuplot::plot_vectors` and `Gnuplot::plot_vectors3d`:
+
+```c++
+#include "gplot++.h"
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+int main(void) {
+  Gnuplot gnuplot{};
+
+  vector<double> x{}, y{};
+  vector<double> vx{}, vy{};
+
+  // Sample a regular grid. Use a small tilt to avoid sampling
+  // the grid at the origin
+  for (double cur_x{-10.1}; cur_x <= 10; cur_x += 1) {
+    for (double cur_y{-10.1}; cur_y <= 10; cur_y += 1) {
+      x.push_back(cur_x);
+      y.push_back(cur_y);
+
+      double r{sqrt(pow(cur_x, 2) + pow(cur_y, 2))};
+      double cur_vx{-cur_x / r};
+      double cur_vy{-cur_y / r};
+      vx.push_back(cur_vx);
+      vy.push_back(cur_vy);
+    }
+  }
+
+  gnuplot.plot_vectors(x, y, vx, vy);
+  gnuplot.show();
+}
+```
+
+![](./images/example-vec.png)
+
+
 ### Saving plots to a file
 
 It is often useful to save the plot into a file, instead of opening a
@@ -466,6 +509,10 @@ ones I referenced while developing my own's:
     `std::vector` plotting.
 
 ## Changelog
+
+### HEAD
+
+-   `Gnuplot::plot_vectors`, `Gnuplot::plot_vectors3d` have been added
 
 ### v0.3.1
 

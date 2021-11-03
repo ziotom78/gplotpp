@@ -422,7 +422,6 @@ private:
       of << "\n";
     }
 
-    std::cerr << "fmtstring = " << fmtstring.str() << "\n";
     series.push_back(GnuplotSeries{of.str(), style, label, fmtstring.str()});
     is_3dplot = is_this_3dplot;
   }

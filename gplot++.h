@@ -206,6 +206,16 @@ public:
     return sendcommand(os);
   }
 
+  /* Save the plot to a SVG file instead of displaying a window */
+  bool redirect_to_svg(const std::string &filename,
+                       const std::string &size = "800,600") {
+    std::stringstream os;
+
+    os << "set terminal svg enhanced mouse standalone size " << size << "\n"
+       << "set output '" << filename << "'\n";
+    return sendcommand(os);
+  }
+
   /* Set the label on the X axis */
   bool set_xlabel(const std::string &label) {
     std::stringstream os;

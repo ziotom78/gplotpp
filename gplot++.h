@@ -346,6 +346,7 @@ public:
     is_3dplot = false;
   }
 
+  // Ask Gnuplot to use a multiple-plot layout
   bool multiplot(int nrows, int ncols, const std::string &title = "") {
     std::stringstream os;
     os << "set multiplot layout " << nrows << ", " << ncols << " title '"
@@ -353,6 +354,8 @@ public:
     return sendcommand(os);
   }
 
+  // Force Gnuplot to draw all the series sent through any of the `plot`
+  // commands
   bool show(bool call_reset = true) {
     if (series.empty())
       return true;
@@ -390,6 +393,7 @@ public:
     return result;
   }
 
+  // Remove all the series from memory and start with a blank plot
   void reset() {
     series.clear();
     set_xrange();

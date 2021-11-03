@@ -8,6 +8,10 @@ project(gplotpp
   LANGUAGES CXX
   )
 
+add_executable(example-3d
+  example-3d.cpp
+  )
+
 add_executable(example-complex
   example-complex.cpp
   )
@@ -36,3 +40,10 @@ add_executable(example-simple
   example-simple.cpp
   )
 
+add_executable(example-vec
+  example-vec.cpp
+  )
+
+add_executable(example-vec3d
+  example-vec3d.cpp
+  )

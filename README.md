@@ -494,6 +494,8 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
+### v0.4.0
+
 -   `Gnuplot::redirect_to_svg` has been added
 
 -   `Gnuplot::plot_vectors`, `Gnuplot::plot_vectors3d` have been added

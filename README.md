@@ -145,9 +145,7 @@ int main(void) {
 
 ### Initializing a connection to Gnuplot
 
-The only symbol exported by file `gplot++.h` is the `Gnuplot` class.
-When you instance an object of this class, it will silently start
-`gnuplot` in the background and open a pipe through it:
+The only symbol exported by file `gplot++.h` is the `Gnuplot` class. When you instance an object of this class, it will silently start `gnuplot` in the background and open a pipe through it:
 
 ```c++
 #include "gplot++.h"
@@ -171,27 +169,18 @@ int main() {
 }
 ```
 
-The connection will be automatically closed once the variable `plt`
-goes out of scope; by default, the Gnuplot window will be left open.
-In this way, you can navigate through the Gnuplot window even after
-your C++ has completed its execution.
+The connection will be automatically closed once the variable `plt` goes out of scope; by default, the Gnuplot window will be left open. In this way, you can navigate through the Gnuplot window even after your C++ has completed its execution.
 
 ### Plot commands
 
-There are two ways to produce a plot; both require you to call the
-`Gnuplot::plot` method:
+There are two ways to produce a plot; both require you to call the `Gnuplot::plot` method:
 
-1. Pass one `std::vector` variable, which will be used to set the `y`
-   coordinates of the points;
-2. Pass two `std::vector` variables; these will be used to set the
-   `(x, y)` coordinates of the points.
+1. Pass one `std::vector` variable, which will be used to set the `y` coordinates of the points;
+2. Pass two `std::vector` variables; these will be used to set the `(x, y)` coordinates of the points.
 
-You can call `plot` multiple times, and each time your call will be
-recorded in a list. When you are ready to produce a plot, call
-`Gnuplot::show`, like in the following example:
+You can call `plot` multiple times, and each time your call will be recorded in a list. When you are ready to produce a plot, call `Gnuplot::show`, like in the following example:
 
-several ways to produce a plot. Each of them requires you to
-pass the data to plot through one or more `std::vector` variables:
+several ways to produce a plot. Each of them requires you to pass the data to plot through one or more `std::vector` variables:
 
 ```c++
 std::vector<int> x{1, 2, 4};  // No problem to use a vector of ints
@@ -214,9 +203,7 @@ plt.show();
 
 ### Histograms
 
-Gplot++ implements the method `Gnuplot::histogram`, which computes the
-histogram of a series and plot it using Gnuplot. Here is an example
-(`example-histogram.cpp`):
+Gplot++ implements the method `Gnuplot::histogram`, which computes the histogram of a series and plot it using Gnuplot. Here is an example (`example-histogram.cpp`):
 
 ```c++
 #include "gplot++.h"
@@ -241,8 +228,11 @@ int main(void) {
 The parameters to `Gnuplot::histogram` are the following:
 
 - A vector containing the values to use in the plot;
+
 - The number of bins to plot (two bins in the example above);
+
 - A label for the plot (optional, default is empty)
+
 - The line style (optional, default is `Gnuplot::LineStyle::BOXES`)
 
 
@@ -251,17 +241,23 @@ The parameters to `Gnuplot::histogram` are the following:
 There are several line styles:
 
 -   `Gnuplot::LineStyle::DOTS` (only use this when you have many points);
+
 -   `Gnuplot::LineStyle::LINES` (the default);
+
 -   `Gnuplot::LineStyle::POINTS`;
+
 -   `Gnuplot::LineStyle::LINESPOINTS`;
+
 -   `Gnuplot::LineStyle::STEPS`;
+
 -   `Gnuplot::LineStyle::BOXES` (only used for histograms).
+
+-   `Gnuplot::LineStyle::VECTORS` (only used for 2D and 3D vector fields).
 
 
 ### Styling the plot axes
 
-You can manually assign a range to the X and Y axes using the methods
-`Gnuplot::set_xlabel` and `Gnuplot::set_ylabel`:
+You can manually assign a range to the X and Y axes using the methods `Gnuplot::set_xlabel` and `Gnuplot::set_ylabel`:
 
 ```c++
 Gnuplot plt{};
@@ -270,8 +266,7 @@ plt.set_xrange(1.5, 3.5);
 plt.set_yrange(); // No parameters means automatic axes
 ```
 
-If you are creating multiple plots (see below), you should probably
-reset the x and y ranges after each call to `Gnuplot::show`.
+If you are creating multiple plots (see below), you should probably reset the x and y ranges after each call to `Gnuplot::show`.
 
 You can also provide a label for both axes:
 
@@ -300,15 +295,15 @@ Possible parameters are:
 
 ### Multiple plots
 
-You can make several plots within the same window using the method
-`Gnuplot::multiplot`. It accepts the following parameters:
+You can make several plots within the same window using the method `Gnuplot::multiplot`. It accepts the following parameters:
 
 - The number of rows to use;
+
 - The number of columns to use;
+
 - A title (optional, default is no title).
 
-You must paint the several plot in order, and each time you complete
-one plot you must call `Gnuplot::show`.
+You must paint the several plot in order, and each time you complete one plot you must call `Gnuplot::show`.
 
 
 ### Error bars
@@ -376,8 +371,7 @@ int main(void) {
 
 ### 3D plots
 
-You can create 3D plots using the command `plot3d`, which takes
-*three* vectors. See the file `example-3d.cpp`:
+You can create 3D plots using the command `plot3d`, which takes *three* vectors. See the file `example-3d.cpp`:
 
 ```c++
 #include "gplot++.h"
@@ -446,9 +440,7 @@ int main(void) {
 
 ### Saving plots to a file
 
-It is often useful to save the plot into a file, instead of opening a
-window. You can save plots in PNG format if you call the method
-`Gnuplot::redirect_to_png`:
+It is often useful to save the plot into a file, instead of opening a window. You can save plots in PNG format if you call the method `Gnuplot::redirect_to_png`:
 
 ```c++
 Gnuplot plt{};
@@ -457,10 +449,7 @@ Gnuplot plt{};
 plt.redirect_to_png("image.png", "800,600");
 ```
 
-The first parameter is the name of the image file to create, and the
-second is a string specifying the size of the image, in the format
-`width,height` (in pixels). If you avoid passing the second parameter,
-a sensible default will be used:
+The first parameter is the name of the image file to create, and the second is a string specifying the size of the image, in the format `width,height` (in pixels). If you avoid passing the second parameter, a sensible default will be used:
 
 ```c++
 Gnuplot plt{};
@@ -469,8 +458,7 @@ Gnuplot plt{};
 plt.redirect_to_png("image.png");
 ```
 
-You can save the plot in a PDF file, which should be the preferred
-format if you plan to include the plot in a LaTeX document:
+You can save the plot in a PDF file, which should be the preferred format if you plan to include the plot in a LaTeX document:
 
 ```c++
 Gnuplot plt{};
@@ -479,10 +467,9 @@ Gnuplot plt{};
 plt.redirect_to_pdf("image.pdf", "20cm,15cm");
 ```
 
-Unlike `Gnuplot::redirect_to_png`, when you create a PDF file you can
-use several measure units to specify the size of the image. In this
-case too, you can avoid passing the second parameter, and a reasonable
-default will be used.
+Unlike `Gnuplot::redirect_to_png`, when you create a PDF file you can use several measure units to specify the size of the image. In this case too, you can avoid passing the second parameter, and a reasonable default will be used.
+
+Finally, you can save the plot in a SVG file via the method `Gnuplot::redirect_to_svg`. In this case, the SVG file will be interactive when opened in a web browser.
 
 
 ### Low-level interface
@@ -498,19 +485,16 @@ plt.sendcommand("plot sin(x)");
 
 ## Similar libraries
 
-There are several other libraries like gplot++ around. These are the
-ones I referenced while developing my own's:
+There are several other libraries like gplot++ around. These are the ones I referenced while developing my own's:
 
--   [gnuplot-iostream](https://github.com/dstahlke/gnuplot-iostream):
-    it has much more features than gplot++, but it is slightly more
-    difficult to install and use.
--   [gnuplot-cpp](https://github.com/martinruenz/gnuplot-cpp): another
-    header-only library. It lacks support for high-level stuff like
-    `std::vector` plotting.
+-   [gnuplot-iostream](https://github.com/dstahlke/gnuplot-iostream): it has much more features than gplot++, but it is slightly more difficult to install and use.
+-   [gnuplot-cpp](https://github.com/martinruenz/gnuplot-cpp): another header-only library. It lacks support for high-level stuff like `std::vector` plotting.
 
 ## Changelog
 
 ### HEAD
+
+-   `Gnuplot::redirect_to_svg` has been added
 
 -   `Gnuplot::plot_vectors`, `Gnuplot::plot_vectors3d` have been added
 
@@ -524,15 +508,14 @@ ones I referenced while developing my own's:
 
 ### v0.2.1
 
--   Ensure that commands sent to Gnuplot are executed immediately
-    ([#1](https://github.com/ziotom78/gplotpp/pull/1))
+-   Ensure that commands sent to Gnuplot are executed immediately ([#1](https://github.com/ziotom78/gplotpp/pull/1))
 
 ### v0.2.0
 
--   New constants `GNUPLOTPP_VERSION`, `GNUPLOTPP_MAJOR_VERSION`,
-    `GNUPLOTPP_MINOR_VERSION`, and `GNUPLOTPP_PATCH_VERSION`
+-   New constants `GNUPLOTPP_VERSION`, `GNUPLOTPP_MAJOR_VERSION`, `GNUPLOTPP_MINOR_VERSION`, and `GNUPLOTPP_PATCH_VERSION`
+
 -   3D plots (after a suggestion by William Luciani)
 
 ### v0.1.0
 
-- First release
+-   First release

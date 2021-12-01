@@ -494,6 +494,8 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
+-   Use a smarter algorithm to specify ranges in `Gnuplot.set_xrange` and `Gnuplot.set_yrange`: now specifying one of the two extrema as `NAN` does not override the specification of the other.
+
 ### v0.4.0
 
 -   `Gnuplot::redirect_to_svg` has been added

@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.5.0 (2021/12/01): use a smarter algorithm to specify ranges
+ *
  * - 0.4.0 (2021/11/04): 2D/3D vector plots, SVG saving
  *
  * - 0.3.1 (2021/10/23): error bars

@@ -475,11 +475,24 @@ private:
   }
 
   std::string format_range(double min = NAN, double max = NAN) {
-    if (std::isnan(min) || std::isnan(max))
+    if (std::isnan(min) && std::isnan(max))
       return "[]";
 
     std::stringstream os;
-    os << "[" << min << ":" << max << "]";
+    os << "[";
+
+    if (std::isnan(min))
+      os << "*";
+    else
+      os << min;
+
+    os << ":";
+    if (std::isnan(max))
+      os << "*";
+    else
+      os << max;
+
+    os << "]";
 
     return os.str();
   }

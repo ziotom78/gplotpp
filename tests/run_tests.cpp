@@ -1,9 +1,11 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <cassert>
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "../gplot++.h"
@@ -28,6 +30,10 @@ string read_file(const char *file_name) {
     return result;
 }
 
+// This is useful to make the program wait until Gnuplot finishes
+// writing stuff on the "dumb" terminal
+void wait() { std::this_thread::sleep_for(std::chrono::milliseconds(1000)); }
+
 TEST_CASE("simple plot") {
     {
         Gnuplot plt{};
@@ -41,6 +47,8 @@ TEST_CASE("simple plot") {
         plt.plot(x, y);
         plt.show();
     }  // Call Gnuplot::~Gnuplot() for plt and save the file
+
+    wait();
 
     string file_contents{read_file("simple-plot.txt")};
     CHECK(file_contents ==
@@ -83,6 +91,8 @@ TEST_CASE("complex") {
         plt.show();
     }  // Call Gnuplot::~Gnuplot() for plt and save the file
 
+    wait();
+
     string file_contents{read_file("complex.txt")};
     CHECK(file_contents ==
           "                                        "
@@ -120,6 +130,8 @@ TEST_CASE("histogram") {
         plt.histogram(samples, 3);
         plt.show();
     }  // Call Gnuplot::~Gnuplot() for plt and save the file
+
+    wait();
 
     string file_contents{read_file("histogram.txt")};
     CHECK(file_contents ==

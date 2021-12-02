@@ -1,5 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cassert>
 #include <chrono>
 #include <cstdio>
@@ -7,13 +9,15 @@
 #include <string>
 #include <thread>
 #include <vector>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 #include "../gplot++.h"
-#include "doctest.h"
 
 using namespace std;
 
 string read_file(const char *file_name) {
+    INFO("Reading text file ", file_name);
+
     FILE *fin{fopen(file_name, "rt")};
     CHECK(fin != nullptr);
 

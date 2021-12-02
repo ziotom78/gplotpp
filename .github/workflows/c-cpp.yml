@@ -60,6 +60,7 @@ jobs:
           cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       # Run the tests
       - name: Run tests
+        if: runner.os != 'Windows'  # On Windows, Chocolatey does not add Gnuplot to PATH
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"
         run: ctest -C Debug --output-on-failure
       - name: Show content of workspace at its completion

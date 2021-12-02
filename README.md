@@ -46,6 +46,7 @@ A few features of this library are the following:
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
       * [HEAD](#head)
+      * [v0.4.0](#v040)
       * [v0.3.1](#v031)
       * [v0.3.0](#v030)
       * [v0.2.1](#v021)
@@ -469,8 +470,11 @@ plt.redirect_to_pdf("image.pdf", "20cm,15cm");
 
 Unlike `Gnuplot::redirect_to_png`, when you create a PDF file you can use several measure units to specify the size of the image. In this case too, you can avoid passing the second parameter, and a reasonable default will be used.
 
-Finally, you can save the plot in a SVG file via the method `Gnuplot::redirect_to_svg`. In this case, the SVG file will be interactive when opened in a web browser.
+You can save the plot in a SVG file via the method `Gnuplot::redirect_to_svg`. In this case, the SVG file will be interactive when opened in a web browser.
 
+Finally, you can use `Gnuplot::redirect_to_dumb` to send the plot to the terminal or to a text file. You can pass a `Gnuplot::TerminalMode` value to specify if you want to include ANSI escape codes to produce colors, as shown in [`example-dumb.cpp`](example-dumb.cpp):
+
+![](images/dumb-terminal-example.png)
 
 ### Low-level interface
 
@@ -493,6 +497,8 @@ There are several other libraries like gplot++ around. These are the ones I refe
 ## Changelog
 
 ### HEAD
+
+-   Add `redirect_to_dumb` and the `TerminalType` enum class to support the `dumb` terminal
 
 -   Use a smarter algorithm to specify ranges in `Gnuplot.set_xrange` and `Gnuplot.set_yrange`: now specifying one of the two extrema as `NAN` does not override the specification of the other.
 

@@ -63,3 +63,7 @@ add_executable(example-vec
 add_executable(example-vec3d
   example-vec3d.cpp
   )
+
+add_executable(example-dumb
+  example-dumb.cpp
+  )

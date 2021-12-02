@@ -46,6 +46,7 @@ A few features of this library are the following:
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
       * [HEAD](#head)
+      * [v0.5.0](#v050)
       * [v0.4.0](#v040)
       * [v0.3.1](#v031)
       * [v0.3.0](#v030)
@@ -497,6 +498,8 @@ There are several other libraries like gplot++ around. These are the ones I refe
 ## Changelog
 
 ### HEAD
+
+### v0.5.0
 
 -   Add `redirect_to_dumb` and the `TerminalType` enum class to support the `dumb` terminal
 

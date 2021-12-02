@@ -61,7 +61,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000400;
+const unsigned GNUPLOTPP_VERSION = 0x000500;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);

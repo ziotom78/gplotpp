@@ -61,7 +61,7 @@ jobs:
       # Run the tests
       - name: Run tests
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"
-        run: ctest -C $BUILD_TYPE -V || cat "${{ env.CMAKE_BUILD_DIR }}/Testing/Temporary/LastTest.log"
+        run: ctest -C $BUILD_TYPE || cat "${{ env.CMAKE_BUILD_DIR }}/Testing/Temporary/LastTest.log"
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE
         shell: bash

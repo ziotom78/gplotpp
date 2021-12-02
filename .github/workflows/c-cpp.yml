@@ -46,7 +46,7 @@ jobs:
       # Run the tests
       - name: Run tests
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"
-        run: ctest -C $BUILD_TYPE
+        run: ctest -C $BUILD_TYPE -V
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE
         shell: bash

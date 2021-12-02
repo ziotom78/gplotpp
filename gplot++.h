@@ -28,7 +28,8 @@
  *
  * Version history
  *
- * - 0.5.0 (2021/12/01): use a smarter algorithm to specify ranges
+ * - 0.5.0 (2021/12/02): use a smarter algorithm to specify ranges
+ *                       add `redirect_to_dumb` (and TerminalType enum)
  *
  * - 0.4.0 (2021/11/04): 2D/3D vector plots, SVG saving
  *
@@ -132,6 +133,13 @@ public:
     LOGXY,
   };
 
+  enum class TerminalMode {
+	MONO,
+	ANSI,
+	ANSI256,
+	ANSIRGB,
+  };
+
   Gnuplot(const char *executable_name = "gnuplot", bool persist = true)
       : connection{}, series{}, files_to_delete{}, is_3dplot{false} {
     std::stringstream os;
@@ -217,6 +225,32 @@ public:
 
     os << "set terminal svg enhanced mouse standalone size " << size << "\n"
        << "set output '" << filename << "'\n";
+    return sendcommand(os);
+  }
+
+  /* Send the plot to the terminal or to a text file */
+  bool redirect_to_dumb(const std::string &filename = "",
+                        unsigned int width = 80,
+						unsigned int height = 50,
+						TerminalMode mode = TerminalMode::MONO) {
+    std::stringstream os;
+
+	os << "set terminal dumb size " << width << " " << height;
+
+	switch(mode) {
+	case TerminalMode::MONO: os << "mono"; break;
+	case TerminalMode::ANSI: os << "ansi"; break;
+	case TerminalMode::ANSI256: os << "ansi256"; break;
+	case TerminalMode::ANSIRGB: os << "ansirgb"; break;
+	default: os << "mono";
+	}
+	
+	os << "\n";
+
+	if (! filename.empty()) {
+	  os << "set output '" << filename << "'\n";
+	}
+	
     return sendcommand(os);
   }
 

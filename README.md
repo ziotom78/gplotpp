@@ -46,6 +46,7 @@ A few features of this library are the following:
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
       * [HEAD](#head)
+      * [v0.5.1](#v051)
       * [v0.5.0](#v050)
       * [v0.4.0](#v040)
       * [v0.3.1](#v031)

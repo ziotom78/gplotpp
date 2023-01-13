@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.6.0 (2023/01/13): add `set_title` method
+ *
  * - 0.5.0 (2021/12/02): use a smarter algorithm to specify ranges
  *                       add `redirect_to_dumb` (and TerminalType enum)
  *
@@ -254,6 +256,13 @@ public:
     return sendcommand(os);
   }
 
+  /* Set the title of the plot */
+  bool set_title(const std::string &title) {
+	std::stringstream os;
+	os << "set title '" << escape_quotes(title) << "'";
+	return sendcommand(os);
+  }
+  
   /* Set the label on the X axis */
   bool set_xlabel(const std::string &label) {
     std::stringstream os;

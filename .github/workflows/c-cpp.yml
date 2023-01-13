@@ -35,8 +35,8 @@ jobs:
       - name: Install Gnuplot for Linux
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get update
-          sudo apt-get install gnuplot
+          sudo apt-get -o Acquire::Retries=3 -y update
+          sudo apt-get -o Acquire::Retries=3 -y install gnuplot
       - name: Install Gnuplot for Mac OS X
         if: runner.os == 'macOS'
         run: |

@@ -127,6 +127,7 @@ int main(void) {
   plt.multiplot(2, 1, "Title");
 
   // Plot #1
+  plt.set_title("Plot #1");
   plt.set_xlabel("X axis");
   plt.set_ylabel("Y axis");
   plt.plot(x, y, "x-y plot");
@@ -134,6 +135,7 @@ int main(void) {
   plt.show(); // Always call "show"!
 
   // Plot #2
+  plt.set_title("Plot #2");
   plt.set_xlabel("Value");
   plt.set_ylabel("Number of counts");
   plt.histogram(y, 2, "Histogram");

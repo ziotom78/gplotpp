@@ -501,6 +501,10 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
+### v0.5.1
+
+-   Add `Gnuplot::set_title`
+
 ### v0.5.0
 
 -   Add `redirect_to_dumb` and the `TerminalType` enum class to support the `dumb` terminal

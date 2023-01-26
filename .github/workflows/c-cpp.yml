@@ -48,7 +48,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install gnuplot
-          $env:Path += ";C:\Program Files\gnuplot\bin"
+          Add-Content $env:GITHUB_PATH "C:\Program Files\gnuplot\bin"
           gnuplot --version
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.

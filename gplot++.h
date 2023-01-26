@@ -189,7 +189,7 @@ public:
 	// We need to use "std::endl" here, because it might either be
 	// a LR or a CRLF
 	os << str << std::endl;
-    fputs(str.str(), connection);
+    fputs(os.str().c_str(), connection);
     fflush(connection);
 
     return true;

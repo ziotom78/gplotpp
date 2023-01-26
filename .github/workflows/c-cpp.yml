@@ -44,7 +44,12 @@ jobs:
           brew install gnuplot
       - name: Install Gnuplot for Windows
         if: runner.os == 'Windows'
-        run: choco install gnuplot
+        run: |
+          choco install gnuplot
+          Add-Content $env:GITHUB_PATH "C:\Program Files\gnuplot\bin"
+
+      - name: Check Gnuplot version
+        run: gnuplot --version
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
@@ -53,16 +58,15 @@ jobs:
       # Run CMake to generate project files
       - name: Generate project files
         run: |
-          cmake -B "${{ env.CMAKE_BUILD_DIR }}"
+          mkdir build
+          cd build
+          cmake -B ..
       # Build the whole project
       - name: Build
+        working-directory: "${{ env.CMAKE_BUILD_DIR }}/build"
         run: |
-          cmake --build "${{ env.CMAKE_BUILD_DIR }}"
+          cmake --build .
       # Run the tests
       - name: Run tests
-        if: runner.os != 'Windows'  # On Windows, Chocolatey does not add Gnuplot to PATH
-        working-directory: "${{ env.CMAKE_BUILD_DIR }}"
-        run: ctest -C Debug --output-on-failure
-      - name: Show content of workspace at its completion
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+        working-directory: "${{ env.CMAKE_BUILD_DIR }}/build"
+        run: ctest -C Debug --build-and-test --output-on-failure

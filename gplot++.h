@@ -156,7 +156,7 @@ public:
 
     // See
     // https://stackoverflow.com/questions/28152719/how-to-make-gnuplot-use-the-unicode-minus-sign-for-negative-numbers
-    sendcommand("set encoding utf8\n");
+    sendcommand("set encoding utf8");
     sendcommand("set minussign");
   }
 
@@ -184,8 +184,12 @@ public:
     if (!ok())
       return false;
 
-    fputs(str, connection);
-    fputc('\n', connection);
+	std::stringstream os;
+
+	// We need to use "std::endl" here, because it might either be
+	// a LR or a CRLF
+	os << str << std::endl;
+    fputs(os.str().c_str(), connection);
     fflush(connection);
 
     return true;
@@ -203,7 +207,7 @@ public:
                        const std::string &size = "800,600") {
     std::stringstream os;
 
-    os << "set terminal pngcairo color enhanced size " << size << "\n"
+    os << "set terminal pngcairo color enhanced size " << size << std::endl
        << "set output '" << filename << "'\n";
     return sendcommand(os);
   }
@@ -213,7 +217,7 @@ public:
                        std::string size = "16cm,12cm") {
     std::stringstream os;
 
-    os << "set terminal pdfcairo color enhanced size " << size << "\n"
+    os << "set terminal pdfcairo color enhanced size " << size << std::endl
        << "set output '" << filename << "'\n";
     return sendcommand(os);
   }
@@ -223,7 +227,7 @@ public:
                        const std::string &size = "800,600") {
     std::stringstream os;
 
-    os << "set terminal svg enhanced mouse standalone size " << size << "\n"
+    os << "set terminal svg enhanced mouse standalone size " << size << std::endl
        << "set output '" << filename << "'\n";
     return sendcommand(os);
   }
@@ -245,7 +249,7 @@ public:
 	default: os << "mono";
 	}
 	
-	os << "\n";
+	os << std::endl;
 
 	if (! filename.empty()) {
 	  os << "set output '" << filename << "'\n";
@@ -377,7 +381,7 @@ public:
 
     std::stringstream of;
     for (size_t i{}; i < nbins; ++i) {
-      of << min + binwidth * (i + 0.5) << " " << bins[i] << "\n";
+      of << min + binwidth * (i + 0.5) << " " << bins[i] << std::endl;
     }
 
     series.push_back(GnuplotSeries{of.str(), style, label, "1:2"});
@@ -471,7 +475,7 @@ private:
     std::stringstream fmtstring;
     for (size_t i{}; i < v.size(); ++i) {
       _print_ith_elements(of, fmtstring, 1, i, v, args...);
-      of << "\n";
+      of << std::endl;
     }
 
     series.push_back(GnuplotSeries{of.str(), style, label, fmtstring.str()});

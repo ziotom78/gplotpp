@@ -53,4 +53,6 @@ add_executable(example-dumb
   example-dumb.cpp
   )
 
+enable_testing ()
+
 add_subdirectory (tests)

@@ -37,16 +37,19 @@ jobs:
         run: |
           sudo apt-get -o Acquire::Retries=3 -y update
           sudo apt-get -o Acquire::Retries=3 -y install gnuplot
+          gnuplot --version
       - name: Install Gnuplot for Mac OS X
         if: runner.os == 'macOS'
         run: |
           brew update
           brew install gnuplot
+          gnuplot --version
       - name: Install Gnuplot for Windows
         if: runner.os == 'Windows'
         run: |
           choco install gnuplot
-          $env:Path += ";C:\Program Files (x86)\gnuplot\bin"
+          $env:Path += ";C:\Program Files\gnuplot\bin"
+          gnuplot --version
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest

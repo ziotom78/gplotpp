@@ -65,7 +65,7 @@ jobs:
           cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       # Run the tests
       - name: Run tests
-        working-directory: "${{ env.CMAKE_BUILD_DIR }}"
+        working-directory: "${{ env.CMAKE_BUILD_DIR }}/tests"
         run: ctest -C Debug --output-on-failure
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE

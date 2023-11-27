@@ -205,7 +205,7 @@ plt.show();
 
 ![](images/multipleseries.png)
 
-**New in version 0.7.0**: Instead of providing the two vectors, you can call `Gnuplot::add_point()` repeatedly and then call `Gnuplot::plot()` without specifying vectors. See the example program [example-addpoint.cpp](https://github.com/ziotom78/gplotpp/blob/master/example-3d.cpp).
+**New in version 0.7.0**: Instead of providing the two vectors, you can call `Gnuplot::add_point()` repeatedly and then call `Gnuplot::plot()` without specifying vectors. See the example program [example-addpoint.cpp](https://github.com/ziotom78/gplotpp/blob/master/example-addpoint.cpp).
 
 
 ### Histograms

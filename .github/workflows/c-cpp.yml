@@ -58,7 +58,7 @@ jobs:
       # Build the whole project
       - name: Build
         run: |
-          cmake --build --verbose "${{ env.CMAKE_BUILD_DIR }}"
+          cmake --build "${{ env.CMAKE_BUILD_DIR }}" --verbose
       # Run the tests
       - name: Run tests
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"

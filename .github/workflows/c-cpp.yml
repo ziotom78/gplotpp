@@ -45,19 +45,20 @@ jobs:
       - name: Install Gnuplot and MinGW for Windows
         if: runner.os == 'Windows'
         run: |
-          choco install gnuplot --install-arguments="/LOADINF=gnuplot_install.inf"
-          choco install mingw
+          choco install -y --no-progress gnuplot --install-arguments="/LOADINF=gnuplot_install.inf"
+          choco install -y --no-progress mingw
+          g++ --version
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
       
       - name: Generate project files
         run: |
-          cmake -B "${{ env.CMAKE_BUILD_DIR }}"
+          cmake -G Ninja -B "${{ env.CMAKE_BUILD_DIR }}"
       # Build the whole project
       - name: Build
         run: |
-          cmake --build "${{ env.CMAKE_BUILD_DIR }}" --verbose
+          cmake -G Ninja --build "${{ env.CMAKE_BUILD_DIR }}"
       # Run the tests
       - name: Run tests
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"

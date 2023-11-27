@@ -58,7 +58,7 @@ jobs:
       # Build the whole project
       - name: Build
         run: |
-          cmake -G Ninja --build "${{ env.CMAKE_BUILD_DIR }}"
+          cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       # Run the tests
       - name: Run tests
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"

@@ -119,6 +119,10 @@ private:
   std::vector<double> list_of_x;
   std::vector<double> list_of_y;
 
+  void check_consistency() const {
+      assert(list_of_x.size() == list_of_y.size());
+  }
+
 public:
   enum class LineStyle {
     DOTS,
@@ -364,6 +368,8 @@ public:
 
   /* Add a point to the list of samples to be plotted */
   void add_point(double x, double y) {
+      check_consistency();
+
       list_of_x.push_back(x);
       list_of_y.push_back(y);
   }
@@ -373,8 +379,16 @@ public:
       add_point(list_of_x.size(), y);
   }
 
+  int get_num_of_points() const {
+      check_consistency();
+
+      return (int) list_of_x.size();
+  }
+
   /* Create a plot using the values set with the method `add_point` */
   void plot(const std::string &label = "", LineStyle style = LineStyle::LINES) {
+      check_consistency();
+
       _plot(label, style, false, list_of_x, list_of_y);
   }
 

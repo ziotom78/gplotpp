@@ -15,10 +15,6 @@ add_test(NAME run_tests
   COMMAND run_tests
   )
 
-add_executable(run_tests
-  tests/run_tests.cpp
-  )
-
 add_executable(example-3d
   example-3d.cpp
   )
@@ -65,4 +61,8 @@ add_executable(example-vec3d
 
 add_executable(example-dumb
   example-dumb.cpp
+  )
+
+add_executable(run_tests
+  tests/run_tests.cpp
   )

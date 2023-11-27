@@ -19,11 +19,6 @@ add_executable(run_tests
   tests/run_tests.cpp
   )
 
-target_include_directories(run_tests PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<INSTALL_INTERFACE:include>
-  )
-
 add_executable(example-3d
   example-3d.cpp
   )

@@ -379,11 +379,18 @@ public:
       add_point(list_of_x.size(), y);
   }
 
+  /* Return the number of points added by `add_point` */
   int get_num_of_points() const {
       check_consistency();
 
       return (int) list_of_x.size();
   }
+
+  /* Return the list of abscissas for the points added by `add_point` */
+  const std::vector<double> & get_points_x() const { return list_of_x; }
+
+    /* Return the list of ordinates for the points added by `add_point` */
+  const std::vector<double> & get_points_y() const { return list_of_y; }
 
   /* Create a plot using the values set with the method `add_point` */
   void plot(const std::string &label = "", LineStyle style = LineStyle::LINES) {

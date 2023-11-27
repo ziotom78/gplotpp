@@ -376,7 +376,7 @@ public:
 
   /* Add a value to the list of samples to be plotted */
   void add_point(double y) {
-      add_point(list_of_x.size(), y);
+      add_point(static_cast<double>(list_of_x.size()), y);
   }
 
   /* Return the number of points added by `add_point` */

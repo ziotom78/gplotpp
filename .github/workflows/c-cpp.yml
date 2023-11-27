@@ -42,20 +42,15 @@ jobs:
         run: |
           brew update
           brew install gnuplot
-      - name: Install Gnuplot for Windows
+      - name: Install Gnuplot and MinGW for Windows
         if: runner.os == 'Windows'
         run: |
           choco install gnuplot --install-arguments="/LOADINF=gnuplot_install.inf"
+          choco install mingw
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
       
-      - name: Set up MinGW
-        if: runner.os == 'Windows'
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64      # Run CMake to generate project files
-          
       - name: Generate project files
         run: |
           cmake -B "${{ env.CMAKE_BUILD_DIR }}"

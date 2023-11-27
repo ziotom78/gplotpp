@@ -205,6 +205,8 @@ plt.show();
 
 ![](images/multipleseries.png)
 
+**New in version 0.7.0**: Instead of providing the two vectors, you can call `Gnuplot::add_point()` repeatedly and then call `Gnuplot::plot()` without specifying vectors. See the example program [example-addpoint.cpp](https://github.com/ziotom78/gplotpp/blob/master/example-3d.cpp).
+
 
 ### Histograms
 
@@ -502,7 +504,11 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
-### v0.5.1
+### v0.7.0
+
+-   Add `Gnuplot::add_point`, `Gnuplot::get_num_of_points()`, `Gnuplot::get_points_x()`, and `Gnuplot::get_points_y()`, as well as a new overloaded method `Gnuplot::plot()` which does not require the vectors of `x` and `y`.
+
+### v0.5.1 (a.k.a. 0.6.0)
 
 -   Add `Gnuplot::set_title`
 

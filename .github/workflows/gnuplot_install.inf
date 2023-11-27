@@ -1,0 +1,9 @@
+[Setup]
+Lang=en
+Dir=C:\gnuplot
+Group=gnuplot
+NoIcons=0
+SetupType=full
+Components=core
+Tasks=defaulttermpreserve,modifypath
+

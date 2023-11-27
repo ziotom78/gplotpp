@@ -42,27 +42,30 @@ jobs:
         run: |
           brew update
           brew install gnuplot
-      - name: Install Gnuplot for Windows
+      - name: Install Gnuplot and MinGW for Windows
         if: runner.os == 'Windows'
-        run: choco install gnuplot
+        run: |
+          choco install -y --no-progress gnuplot --install-arguments="/LOADINF=gnuplot_install.inf"
+          choco install -y --no-progress mingw
+          g++ --version
           
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
-      # On Windows runners, let's ensure to have the Developer Command Prompt environment setup correctly. As used here the Developer Command Prompt created is targeting x64 and using the default the Windows SDK.
-      - uses: ilammy/msvc-dev-cmd@v1
-      # Run CMake to generate project files
+      
       - name: Generate project files
         run: |
-          cmake -B "${{ env.CMAKE_BUILD_DIR }}"
+          cmake -G Ninja -B "${{ env.CMAKE_BUILD_DIR }}"
       # Build the whole project
       - name: Build
         run: |
           cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       # Run the tests
       - name: Run tests
-        if: runner.os != 'Windows'  # On Windows, Chocolatey does not add Gnuplot to PATH
         working-directory: "${{ env.CMAKE_BUILD_DIR }}"
-        run: ctest -C Debug --output-on-failure
+        # Under Windows, Chocolatey does not put Gnuplot in the PATH and the tests fail
+        if: runner.os != 'Windows'
+        run: |
+          ctest -C Debug --output-on-failure
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE
         shell: bash

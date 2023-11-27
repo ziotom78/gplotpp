@@ -28,6 +28,10 @@ add_executable(example-3d
   example-3d.cpp
   )
 
+add_executable(example-addpoint
+  example-addpoint.cpp
+)
+
 add_executable(example-complex
   example-complex.cpp
   )

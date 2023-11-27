@@ -28,6 +28,10 @@
  *
  * Version history
  *
+ * - 0.7.0 (2023/11/27): new methods `add_point`
+ *
+ * - 0.6.0 (2023/01/26): new method `set_title`
+ *
  * - 0.5.0 (2021/12/02): use a smarter algorithm to specify ranges
  *                       add `redirect_to_dumb` (and TerminalType enum)
  *
@@ -61,7 +65,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000500;
+const unsigned GNUPLOTPP_VERSION = 0x000700;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);
@@ -111,6 +115,9 @@ private:
 
     return result;
   }
+
+  std::vector<double> list_of_x;
+  std::vector<double> list_of_y;
 
 public:
   enum class LineStyle {
@@ -254,6 +261,12 @@ public:
     return sendcommand(os);
   }
 
+  bool set_title(const std::string &title) {
+	std::stringstream os;
+	os << "set title '" << escape_quotes(title) << "'";
+	return sendcommand(os);
+  }
+
   /* Set the label on the X axis */
   bool set_xlabel(const std::string &label) {
     std::stringstream os;
@@ -349,7 +362,23 @@ public:
     _plot(label, LineStyle::VECTORS, true, x, y, z, vx, vy, vz);
   }
 
-  template <typename T>
+  /* Add a point to the list of samples to be plotted */
+  void add_point(double x, double y) {
+      list_of_x.push_back(x);
+      list_of_y.push_back(y);
+  }
+
+  /* Add a value to the list of samples to be plotted */
+  void add_point(double y) {
+      add_point(list_of_x.size(), y);
+  }
+
+  /* Create a plot using the values set with the method `add_point` */
+  void plot(const std::string &label = "", LineStyle style = LineStyle::LINES) {
+      _plot(label, style, false, list_of_x, list_of_y);
+  }
+
+    template <typename T>
   void histogram(const std::vector<T> &values, size_t nbins,
                  const std::string &label = "",
                  LineStyle style = LineStyle::BOXES) {

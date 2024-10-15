@@ -28,6 +28,11 @@
  *
  * Version history
  *
+ * - 0.8.0 (2024/10/15): new methods `add_point_xerr`,
+ *                       `add_point_yerr`, and `add_point_xyerr`,
+ *                       and new overloads for functions
+ *                       `plot_xerr`, `plot_yerr`, `plot_xyerr`
+ *
  * - 0.7.0 (2023/11/27): new methods `add_point`
  *
  * - 0.6.0 (2023/01/26): new method `set_title`
@@ -65,7 +70,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000700;
+const unsigned GNUPLOTPP_VERSION = 0x000800;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);
@@ -118,9 +123,16 @@ private:
 
   std::vector<double> list_of_x;
   std::vector<double> list_of_y;
+  std::vector<double> list_of_xerr;
+  std::vector<double> list_of_yerr;
 
   void check_consistency() const {
       assert(list_of_x.size() == list_of_y.size());
+
+      if(list_of_xerr.size() > 0)
+        assert(list_of_xerr.size() == list_of_x.size());
+      if(list_of_yerr.size() > 0)
+        assert(list_of_yerr.size() == list_of_y.size());
   }
 
 public:
@@ -366,6 +378,33 @@ public:
     _plot(label, LineStyle::VECTORS, true, x, y, z, vx, vy, vz);
   }
 
+  /* Add a point and a X error bar to the list of samples to be plotted */
+  void add_point_xerr(double x, double y, double err) {
+    check_consistency();
+
+    list_of_x.push_back(x);
+    list_of_y.push_back(y);
+    list_of_xerr.push_back(err);
+  }
+
+  /* Add a point and a Y error bar to the list of samples to be plotted */
+  void add_point_yerr(double x, double y, double err) {
+    check_consistency();
+
+    list_of_x.push_back(x);
+    list_of_y.push_back(y);
+    list_of_yerr.push_back(err);
+  }
+
+  /* Add a point and two X/Y error bars to the list of samples to be plotted */
+  void add_point_xyerr(double x, double y, double xerr, double yerr) {
+    check_consistency();
+
+    list_of_x.push_back(x);
+    list_of_y.push_back(y);
+    list_of_xerr.push_back(xerr);
+    list_of_yerr.push_back(yerr);
+  }
   /* Add a point to the list of samples to be plotted */
   void add_point(double x, double y) {
       check_consistency();
@@ -397,6 +436,27 @@ public:
       check_consistency();
 
       _plot(label, style, false, list_of_x, list_of_y);
+  }
+
+  /* Create a plot with X error bars using the values set with the method `add_point` */
+  void plot_xerr(const std::string &label = "") {
+    check_consistency();
+
+    plot_xerr(list_of_x, list_of_y, list_of_xerr, label);
+  }
+
+  /* Create a plot with X error bars using the values set with the method `add_point` */
+  void plot_yerr(const std::string &label = "") {
+    check_consistency();
+
+    plot_yerr(list_of_x, list_of_y, list_of_yerr, label);
+  }
+
+  /* Create a plot with X error bars using the values set with the method `add_point` */
+  void plot_xyerr(const std::string &label = "") {
+    check_consistency();
+
+    plot_xyerr(list_of_x, list_of_y, list_of_xerr, list_of_yerr, label);
   }
 
     template <typename T>

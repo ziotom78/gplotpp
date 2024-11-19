@@ -267,13 +267,13 @@ public:
 	case TerminalMode::ANSIRGB: os << "ansirgb"; break;
 	default: os << "mono";
 	}
-	
+
 	os << "\n";
 
 	if (! filename.empty()) {
 	  os << "set output '" << filename << "'\n";
 	}
-	
+
     return sendcommand(os);
   }
 

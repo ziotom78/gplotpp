@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.9.0 (2024/11/19): new method `redirect_to_animated_gif`
+ *
  * - 0.8.0 (2024/10/15): new methods `add_point_xerr`,
  *                       `add_point_yerr`, and `add_point_xyerr`,
  *                       and new overloads for functions
@@ -70,7 +72,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000800;
+const unsigned GNUPLOTPP_VERSION = 0x000900;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);
@@ -249,6 +251,30 @@ public:
     os << "set terminal svg enhanced mouse standalone size " << size << "\n"
        << "set output '" << filename << "'\n";
     return sendcommand(os);
+  }
+
+  /* Save the plot to an animated GIF. The delay between frames is specified
+   * by the `delay_ms` parameter (in milliseconds). If `loop` is `true` (the
+   * default), the animation will loop indefinitely, otherwise it will just
+   * play once and stop at the last frame.
+   *
+   * Note that frames are saved only once you call `Gnuplot::show()`. Therefore,
+   * if you want to put N frames in your animation, you have to call
+   * `Gnuplot::show()` exactly N times.
+   */
+  bool redirect_to_animated_gif(const std::string &filename,
+								const std::string &size = "800,600",
+								int delay_ms = 50,
+								bool loop = true) {
+	std::stringstream os;
+
+	// Unfortunately, Gnuplot requires the delay to be expressed in units of 1/100 s
+	// instead of the more common unit 1/1000 s, so we need to divide by 10.
+	// We do not support a fixed number of repetitions: either you loop infinitely
+	// or play the animation just once
+	os << "set terminal gif animate delay " << delay_ms / 10 << " loop " << (loop ? 0 : 1) << "\n"
+	   << "set output '" << filename << "'\n";
+	return sendcommand(os);
   }
 
   /* Send the plot to the terminal or to a text file */

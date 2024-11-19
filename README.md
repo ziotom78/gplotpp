@@ -42,6 +42,7 @@ A few features of this library are the following:
       * [3D plots](#3d-plots)
       * [Vector fields](#vector-fields)
       * [Saving plots to a file](#saving-plots-to-a-file)
+      * [Animations](#animations)
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
@@ -481,6 +482,43 @@ You can save the plot in a SVG file via the method `Gnuplot::redirect_to_svg`. I
 Finally, you can use `Gnuplot::redirect_to_dumb` to send the plot to the terminal or to a text file. You can pass a `Gnuplot::TerminalMode` value to specify if you want to include ANSI escape codes to produce colors, as shown in [`example-dumb.cpp`](example-dumb.cpp):
 
 ![](images/dumb-terminal-example.png)
+
+### Animations
+
+You can plot animations interactively by simply running a `for` loop and adding a delay before plotting the next frame. A better solution is to create an animated GIF file using `Gnuplot::redirect_to_animated_gif`:
+
+```c++
+int main(void) {
+  Gnuplot gnuplot{};
+  std::vector<double> x{1, 2, 3, 4, 5}, y{5, 2, 4, 1, 3};
+
+  std::cout << "Running gplot++ v" << GNUPLOTPP_MAJOR_VERSION << "."
+            << GNUPLOTPP_MINOR_VERSION << "." << GNUPLOTPP_PATCH_VERSION
+            << "\n";
+
+  gnuplot.redirect_to_animated_gif("animation.gif", "800,600", 1000, true);
+
+  for(int i{}; i < (int) x.size(); ++i) {
+	gnuplot.add_point(x[i], y[i]);
+	gnuplot.plot(); // Do the plot
+
+	// In an animation, it is advisable to force the x/y ranges in advance
+	gnuplot.set_xrange(0, 6);
+	gnuplot.set_yrange(0, 6);
+
+	gnuplot.show(); // Add the frame to the GIF file
+  }
+
+  gnuplot.show();
+
+  std::cout << "Press any key to quit...";
+  std::getchar();
+}
+```
+
+Here is the result:
+
+![](images/animation.gif)
 
 ### Low-level interface
 

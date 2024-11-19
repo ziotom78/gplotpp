@@ -23,6 +23,10 @@ add_executable(example-addpoint
   example-addpoint.cpp
 )
 
+add_executable(example-animated-gif
+  example-animated-gif.cpp
+)
+
 add_executable(example-complex
   example-complex.cpp
   )

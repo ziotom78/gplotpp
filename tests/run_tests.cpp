@@ -65,3 +65,31 @@ TEST_CASE("complex") {
 	CHECK(file_contents.find("X axis") != string::npos);
 	CHECK(file_contents.find("Y axis") != string::npos);
 }
+
+TEST_CASE("animation") {
+  const string file_name{"animation.gif"};
+
+  {
+	Gnuplot plt{};
+
+	plt.redirect_to_animated_gif(file_name);
+
+	vector<double> x{1, 2, 3, 4, 5};
+	vector<double> y{5, 4, 3, 2, 1};
+
+	for(int i{}; i < (int) x.size(); ++i) {
+	  plt.add_point(x[i], y[i]);
+
+	  // Draw the frame
+	  plt.plot();
+
+	  // Add it to the GIF file
+	  plt.show();
+	}
+  }
+
+  wait();
+
+  // No checks, just try to compile the code above and verify that no
+  // errors are issued
+}

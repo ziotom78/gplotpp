@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.9.1 (2025/02/06): bug fixes in method `histogram`
+ *
  * - 0.9.0 (2024/11/19): new method `redirect_to_animated_gif`
  *
  * - 0.8.0 (2024/10/15): new methods `add_point_xerr`,
@@ -72,7 +74,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000900;
+const unsigned GNUPLOTPP_VERSION = 0x000901;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);
@@ -498,18 +500,34 @@ public:
       assert(!is_3dplot);
     }
 
-    double min = *std::min_element(values.begin(), values.end());
-    double max = *std::max_element(values.begin(), values.end());
-    double binwidth = (max - min) / nbins;
+    auto min_iter = std::min_element(values.begin(), values.end());
+    auto max_iter = std::max_element(values.begin(), values.end());
+    double min, max, binwidth;
 
-    std::vector<size_t> bins(nbins);
-    for (const auto &val : values) {
-      int index = static_cast<int>((val - min) / binwidth);
-      if (index >= int(nbins))
-        --index;
+    std::vector<size_t> bins{};
 
-      bins.at(index)++;
-    }
+  	// Check if all the elements are the same
+  	if (min_iter != max_iter) {
+  	  min = *min_iter;
+  	  max = *max_iter;
+  	  binwidth = (max - min) / nbins;
+
+  	  bins.resize(nbins);
+  	  for (const auto &val : values) {
+    		int index = static_cast<int>((val - min) / binwidth);
+    		if (index >= int(nbins))
+    		  --index;
+
+    		bins.at(index)++;
+  	  }
+  	} else {
+  	  // Just one bin…
+
+  	  min = max = *min_iter;
+  	  binwidth = 1.0;
+  	  nbins = 1;
+  	  bins.push_back(static_cast<double>(values.size()));
+  	}
 
     std::stringstream of;
     for (size_t i{}; i < nbins; ++i) {

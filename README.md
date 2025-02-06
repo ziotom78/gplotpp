@@ -542,6 +542,18 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
+### 0.9.1
+
+-   Bug fixes in method `histogram` (see PR [#15](https://github.com/ziotom78/gplotpp/pull/15))
+
+### 0.9.0
+
+-   New method `redirect_to_animated_gif`
+
+### v0.8.0
+
+-   New methods `add_point_xerr`, `add_point_yerr`, and `add_point_xyerr`, and new overloads for functions `plot_xerr`, `plot_yerr`, `plot_xyerr`
+
 ### v0.7.0
 
 -   Add `Gnuplot::add_point`, `Gnuplot::get_num_of_points()`, `Gnuplot::get_points_x()`, and `Gnuplot::get_points_y()`, as well as a new overloaded method `Gnuplot::plot()` which does not require the vectors of `x` and `y`.

@@ -28,7 +28,7 @@
  *
  * Version history
  *
- * - 0.9.2 (2025/09/23): use [[nodiscard]] where appropriate
+ * - 0.10.0 (2025/09/23): use [[nodiscard]] where appropriate
  *
  * - 0.9.1 (2025/02/06): bug fixes in method `histogram`
  *
@@ -76,7 +76,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned GNUPLOTPP_VERSION = 0x000901;
+const unsigned GNUPLOTPP_VERSION = 0x000a00;
 const unsigned GNUPLOTPP_MAJOR_VERSION = (GNUPLOTPP_VERSION & 0xFF0000) >> 16;
 const unsigned GNUPLOTPP_MINOR_VERSION = (GNUPLOTPP_VERSION & 0x00FF00) >> 8;
 const unsigned GNUPLOTPP_PATCH_VERSION = (GNUPLOTPP_VERSION & 0xFF);

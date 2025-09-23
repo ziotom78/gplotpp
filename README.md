@@ -47,22 +47,21 @@ A few features of this library are the following:
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
       * [HEAD](#head)
-      * [v0.10.0](#v0100)
-      * [v0.9.1](#v091)
-      * [v0.9.0](#v090)
-      * [v0.8.0](#v080)
-      * [v0.7.0](#v070)
-      * [v0.5.1](#v051)
-      * [v0.5.0](#v050)
-      * [v0.4.0](#v040)
-      * [v0.3.1](#v031)
-      * [v0.3.0](#v030)
-      * [v0.2.1](#v021)
-      * [v0.2.0](#v020)
-      * [v0.1.0](#v010)
+      * [v0.10.0 {#v0100}](#v0100-v0100)
+      * [v0.9.1 {#v091}](#v091-v091)
+      * [v0.9.0 {#v090}](#v090-v090)
+      * [v0.8.0 {#v080}](#v080-v080)
+      * [v0.7.0 {#v070}](#v070-v070)
+      * [v0.5.1 (a.k.a. 0.6.0) {#v051}](#v051-aka-060-v051)
+      * [v0.5.0 {#v050}](#v050-v050)
+      * [v0.4.0 {#v040}](#v040-v040)
+      * [v0.3.1 {#v031}](#v031-v031)
+      * [v0.3.0 {v030}](#v030-v030)
+      * [v0.2.1 {#v021}](#v021-v021)
+      * [v0.2.0 {#v020}](#v020-v020)
+      * [v0.1.0 {#v010}](#v010-v010)
 
-Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
-
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
 ## Installing Gnuplot and `gplot++.h`
 

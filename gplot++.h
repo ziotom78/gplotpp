@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 0.9.2 (2025/09/23): use [[nodiscard]] where appropriate
+ *
  * - 0.9.1 (2025/02/06): bug fixes in method `histogram`
  *
  * - 0.9.0 (2024/11/19): new method `redirect_to_animated_gif`

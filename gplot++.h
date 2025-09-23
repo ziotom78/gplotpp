@@ -223,7 +223,7 @@ public:
     return sendcommand(stream.str());
   }
 
-  bool ok() { return connection != nullptr; }
+  [[nodiscard]] bool ok() { return connection != nullptr; }
 
   /* Save the plot to a PNG file instead of displaying a window */
   bool redirect_to_png(const std::string &filename,
@@ -447,17 +447,17 @@ public:
   }
 
   /* Return the number of points added by `add_point` */
-  int get_num_of_points() const {
+  [[nodiscard]] int get_num_of_points() const {
       check_consistency();
 
       return (int) list_of_x.size();
   }
 
   /* Return the list of abscissas for the points added by `add_point` */
-  const std::vector<double> & get_points_x() const { return list_of_x; }
+  [[nodiscard]] const std::vector<double> & get_points_x() const { return list_of_x; }
 
     /* Return the list of ordinates for the points added by `add_point` */
-  const std::vector<double> & get_points_y() const { return list_of_y; }
+  [[nodiscard]] const std::vector<double> & get_points_y() const { return list_of_y; }
 
   /* Create a plot using the values set with the method `add_point` */
   void plot(const std::string &label = "", LineStyle style = LineStyle::LINES) {
@@ -487,7 +487,7 @@ public:
     plot_xyerr(list_of_x, list_of_y, list_of_xerr, list_of_yerr, label);
   }
 
-    template <typename T>
+  template <typename T>
   void histogram(const std::vector<T> &values, size_t nbins,
                  const std::string &label = "",
                  LineStyle style = LineStyle::BOXES) {

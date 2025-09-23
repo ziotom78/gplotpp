@@ -46,20 +46,21 @@ A few features of this library are the following:
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
+   * [Changelog](#changelog)
       * [HEAD](#head)
-      * [v0.10.0 {#v0100}](#v0100-v0100)
-      * [v0.9.1 {#v091}](#v091-v091)
-      * [v0.9.0 {#v090}](#v090-v090)
-      * [v0.8.0 {#v080}](#v080-v080)
-      * [v0.7.0 {#v070}](#v070-v070)
-      * [v0.5.1 (a.k.a. 0.6.0) {#v051}](#v051-aka-060-v051)
-      * [v0.5.0 {#v050}](#v050-v050)
-      * [v0.4.0 {#v040}](#v040-v040)
-      * [v0.3.1 {#v031}](#v031-v031)
-      * [v0.3.0 {v030}](#v030-v030)
-      * [v0.2.1 {#v021}](#v021-v021)
-      * [v0.2.0 {#v020}](#v020-v020)
-      * [v0.1.0 {#v010}](#v010-v010)
+      * [v0.10.0](#v0100)
+      * [v0.9.1](#v091)
+      * [v0.9.0](#v090)
+      * [v0.8.0](#v080)
+      * [v0.7.0](#v070)
+      * [v0.5.1 (a.k.a. 0.6.0)](#v051-aka-060)
+      * [v0.5.0](#v050)
+      * [v0.4.0](#v040)
+      * [v0.3.1](#v031)
+      * [v0.3.0](#v030)
+      * [v0.2.1](#v021)
+      * [v0.2.0](#v020)
+      * [v0.1.0](#v010)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
 
@@ -546,60 +547,60 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### HEAD
 
-### v0.10.0 {#v0100}
+### v0.10.0
 
 -   Use `[[nodiscard]]` where appropriate (see PR [#16](https://github.com/ziotom78/gplotpp/pull/16))
 
-### v0.9.1 {#v091}
+### v0.9.1
 
 -   Bug fixes in method `histogram` (see PR [#15](https://github.com/ziotom78/gplotpp/pull/15))
 
-### v0.9.0 {#v090}
+### v0.9.0
 
 -   New method `redirect_to_animated_gif`
 
-### v0.8.0 {#v080}
+### v0.8.0
 
 -   New methods `add_point_xerr`, `add_point_yerr`, and `add_point_xyerr`, and new overloads for functions `plot_xerr`, `plot_yerr`, `plot_xyerr`
 
-### v0.7.0 {#v070}
+### v0.7.0
 
 -   Add `Gnuplot::add_point`, `Gnuplot::get_num_of_points()`, `Gnuplot::get_points_x()`, and `Gnuplot::get_points_y()`, as well as a new overloaded method `Gnuplot::plot()` which does not require the vectors of `x` and `y`.
 
-### v0.5.1 (a.k.a. 0.6.0) {#v051}
+### v0.5.1 (a.k.a. 0.6.0)
 
 -   Add `Gnuplot::set_title`
 
-### v0.5.0 {#v050}
+### v0.5.0
 
 -   Add `redirect_to_dumb` and the `TerminalType` enum class to support the `dumb` terminal
 
 -   Use a smarter algorithm to specify ranges in `Gnuplot.set_xrange` and `Gnuplot.set_yrange`: now specifying one of the two extrema as `NAN` does not override the specification of the other.
 
-### v0.4.0 {#v040}
+### v0.4.0
 
 -   `Gnuplot::redirect_to_svg` has been added
 
 -   `Gnuplot::plot_vectors`, `Gnuplot::plot_vectors3d` have been added
 
-### v0.3.1 {#v031}
+### v0.3.1
 
 -   `Gnuplot::plot_xerr`, `Gnuplot::plot_yerr`, and `Gnuplot::plot_xyerr` have been added
 
-### v0.3.0 {v030}
+### v0.3.0
 
 -   The library is now supported under Windows
 
-### v0.2.1 {#v021}
+### v0.2.1
 
 -   Ensure that commands sent to Gnuplot are executed immediately ([#1](https://github.com/ziotom78/gplotpp/pull/1))
 
-### v0.2.0 {#v020}
+### v0.2.0
 
 -   New constants `GNUPLOTPP_VERSION`, `GNUPLOTPP_MAJOR_VERSION`, `GNUPLOTPP_MINOR_VERSION`, and `GNUPLOTPP_PATCH_VERSION`
 
 -   3D plots (after a suggestion by William Luciani)
 
-### v0.1.0 {#v010}
+### v0.1.0
 
 -   First release

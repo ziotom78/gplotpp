@@ -48,10 +48,10 @@ jobs:
           choco install -y --no-progress gnuplot --install-arguments="/LOADINF=gnuplot_install.inf"
           choco install -y --no-progress mingw
           g++ --version
-          
+
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
-      
+
       - name: Generate project files
         run: |
           cmake -G Ninja -B "${{ env.CMAKE_BUILD_DIR }}"

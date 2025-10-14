@@ -9,6 +9,13 @@ project(gplotpp
   LANGUAGES CXX
   )
 
+# Enable as many warnings as possible and make them blocking
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    add_compile_options(/W4 /WX)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-Wall -Wextra -Werror --pedantic)
+endif()
+
 enable_testing()
 
 add_test(NAME run_tests

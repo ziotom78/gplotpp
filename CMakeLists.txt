@@ -38,9 +38,8 @@ endif()
 add_library(${PROJECT_NAME} INTERFACE)
 
 # include directories
-target_include_directories(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-                                                     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
-                                                     $<INSTALL_INTERFACE:include>)
+target_include_directories(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/.>
+                                                     $<INSTALL_INTERFACE:.>)
 
 ###########
 ## Tests ##
@@ -91,9 +90,8 @@ endif()
 #############
 
 # headers
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        FILES_MATCHING PATTERN "*.h")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/gplot++.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 # export targets
 install(TARGETS ${PROJECT_NAME}

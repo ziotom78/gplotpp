@@ -4,10 +4,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(gplotpp
-  VERSION 0.3.0
-  DESCRIPTION "A C++ header-only interface to Gnuplot"
-  LANGUAGES CXX
-  )
+    VERSION 0.3.0
+    DESCRIPTION "A C++ header-only interface to Gnuplot"
+    LANGUAGES CXX
+)
 
 ############
 ## Config ##
@@ -46,10 +46,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:${CMAKE_C
 ###########
 
 if (GPLOTPP_ENABLE_TESTS)
-    enable_testing()
-    add_test(NAME run_tests COMMAND run_tests)
-    add_executable(run_tests tests/run_tests.cpp)
-    target_link_libraries(run_tests ${PROJECT_NAME})
+    add_subdirectory(tests)
 endif()
 
 ##############
@@ -57,32 +54,7 @@ endif()
 ##############
 
 if (GPLOTPP_BUILD_EXAMPLES)
-    add_executable(example-3d src/example-3d.cpp)
-    target_link_libraries(example-3d ${PROJECT_NAME})
-    add_executable(example-addpoint src/example-addpoint.cpp)
-    target_link_libraries(example-addpoint ${PROJECT_NAME})
-    add_executable(example-animated-gif src/example-animated-gif.cpp)
-    target_link_libraries(example-animated-gif ${PROJECT_NAME})
-    add_executable(example-complex src/example-complex.cpp)
-    target_link_libraries(example-complex ${PROJECT_NAME})
-    add_executable(example-errorbars src/example-errorbars.cpp)
-    target_link_libraries(example-errorbars ${PROJECT_NAME})
-    add_executable(example-histogram src/example-histogram.cpp)
-    target_link_libraries(example-histogram ${PROJECT_NAME})
-    add_executable(example-multipleseries src/example-multipleseries.cpp)
-    target_link_libraries(example-multipleseries ${PROJECT_NAME})
-    add_executable(example-pdfoutput src/example-pdfoutput.cpp)
-    target_link_libraries(example-pdfoutput ${PROJECT_NAME})
-    add_executable(example-pngoutput src/example-pngoutput.cpp)
-    target_link_libraries(example-pngoutput ${PROJECT_NAME})
-    add_executable(example-simple src/example-simple.cpp)
-    target_link_libraries(example-simple ${PROJECT_NAME})
-    add_executable(example-vec src/example-vec.cpp)
-    target_link_libraries(example-vec ${PROJECT_NAME})
-    add_executable(example-vec3d src/example-vec3d.cpp)
-    target_link_libraries(example-vec3d ${PROJECT_NAME})
-    add_executable(example-dumb src/example-dumb.cpp)
-    target_link_libraries(example-dumb ${PROJECT_NAME})
+    add_subdirectory(examples)
 endif()
 
 #############

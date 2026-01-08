@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+# Include configuration file generated with CMakeLists.txt
+include(${CMAKE_CURRENT_LIST_DIR}/gplotppTargets.cmake)
+
+# Dependency forwarding
+# Required to avoid explicitly finding dependencies on 3rd party packages
+include(CMakeFindDependencyMacro)
+
+# confirm that all required components have been found
+check_required_components(gplotpp)

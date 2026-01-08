@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+  <name>gplotpp</name>
+  <version>0.10.0</version>
+  <description>A C++ header-only interface to Gnuplot</description>
+
+  <license>MIT</license>
+
+  <buildtool_depend>cmake</buildtool_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

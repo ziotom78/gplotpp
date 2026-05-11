@@ -5,7 +5,7 @@
 
 A header-only C++ interface to Gnuplot. See [this video](https://vimeo.com/638098854) for a demo (running Visual Studio under Windows 10).
 
-This repository contains the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/gplot%2B%2B.h), which provides a way for C++ programs to connect to a Gnuplot instance to produce plots. To use this library, you must first install [Gnuplot](http://www.gnuplot.info/) on your system!
+This repository contains the file [gplot++.h](https://raw.githubusercontent.com/ziotom78/gplotpp/master/include/gplotpp/gplot%2B%2B.h), which provides a way for C++ programs to connect to a Gnuplot instance to produce plots. To use this library, you must first install [Gnuplot](http://www.gnuplot.info/) on your system!
 
 A few features of this library are the following:
 

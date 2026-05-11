@@ -22,6 +22,7 @@ A few features of this library are the following:
 
 # Table of Contents
 
+
 * [gplot++](#gplot)
 * [Table of Contents](#table-of-contents)
    * [Installing Gnuplot and gplot++.h](#installing-gnuplot-and-gploth)
@@ -46,8 +47,8 @@ A few features of this library are the following:
       * [Low-level interface](#low-level-interface)
    * [Similar libraries](#similar-libraries)
    * [Changelog](#changelog)
-   * [Changelog](#changelog)
       * [HEAD](#head)
+      * [v1.0.0](#v100)
       * [v0.10.0](#v0100)
       * [v0.9.1](#v091)
       * [v0.9.0](#v090)
@@ -63,7 +64,6 @@ A few features of this library are the following:
       * [v0.1.0](#v010)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-
 ## Installing Gnuplot and `gplot++.h`
 
 Of course, before using `gplot++.h` you must have Gnuplot installed and available in the `PATH`! We provide here instructions about how to install Gnuplot under Windows, Mac OS X, and Linux. 
@@ -546,6 +546,10 @@ There are several other libraries like gplot++ around. These are the ones I refe
 ## Changelog
 
 ### HEAD
+
+### v1.0.0
+
+-   First stable release (see issue [#18](https://github.com/ziotom78/gplotpp/issues/18))
 
 ### v0.10.0
 

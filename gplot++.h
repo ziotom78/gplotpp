@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 1.0.0 (2026/05/11): first stable release
+ *
  * - 0.10.1 (2025/10/14): fix compilation bug with -Werror
  *
  * - 0.10.0 (2025/09/23): use [[nodiscard]] where appropriate

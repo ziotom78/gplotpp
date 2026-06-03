@@ -550,7 +550,7 @@ There are several other libraries like gplot++ around. These are the ones I refe
 
 ### v1.1.0
 
--   Add `Gnuplot::clear_list_of_points()`
+-   Add `Gnuplot::clear_list_of_points()` [#20](https://github.com/ziotom78/gplotpp/pull/20)
 
 ### v1.0.0
 

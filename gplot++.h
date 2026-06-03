@@ -28,6 +28,8 @@
  *
  * Version history
  *
+ * - 1.1.0 (2026/06/03): Add `Gnuplot::clear_list_of_points()`
+ *
  * - 1.0.0 (2026/05/11): first stable release
  *
  * - 0.10.1 (2025/10/14): fix compilation bug with -Werror
@@ -280,7 +282,7 @@ public:
     // by 10. We do not support a fixed number of repetitions: either you loop
     // infinitely or play the animation just once
     os << "set terminal gif animate delay " << delay_ms / 10 << " loop "
-	<< (loop ? 0 : 1) << " size " << size << "\n"
+       << (loop ? 0 : 1) << " size " << size << "\n"
        << "set output '" << filename << "'\n";
     return sendcommand(os);
   }
@@ -475,6 +477,14 @@ public:
   /* Return the list of ordinates for the points added by `add_point` */
   [[nodiscard]] const std::vector<double> &get_points_y() const {
     return list_of_y;
+  }
+
+  /* Clear the list of points */
+  void clear_list_of_points() {
+    list_of_x.clear();
+    list_of_y.clear();
+    list_of_xerr.clear();
+    list_of_yerr.clear();
   }
 
   /* Create a plot using the values set with the method `add_point` */
